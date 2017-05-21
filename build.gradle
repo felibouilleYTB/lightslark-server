@@ -1,0 +1,30 @@
+group 'fr.litarvan.slark'
+version '1.0.0'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url 'http://wytrem.github.io/maven'
+    }
+
+    maven {
+        url 'http://litarvan.github.io/maven'
+    }
+}
+
+dependencies {
+    compile 'com.sparkjava:spark-core:2.6.0'
+    compile 'com.google.inject:guice:4.1.0'
+    compile 'com.google.guava:guava:21.0'
+    compile 'commons-io:commons-io:2.5' // Delete further
+
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
+    compile 'org.apache.logging.log4j:log4j-core:2.8.2'
+    compile 'fr.litarvan.commons:litarvan-commons:1.0.0'
+}
