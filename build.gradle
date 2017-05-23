@@ -1,7 +1,22 @@
-group 'fr.litarvan.slark'
-version '1.0.0'
+plugins {
+    id 'com.moowork.node' version '0.13'
+}
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'fr.litarvan.slark.light.server.Main'
+
+node {
+    version = '7.2.1'
+    npmVersion = '3.10.10'
+    download = true
+    workDir = file("${project.projectDir}/node")
+    nodeModulesDir = file("${project.projectDir}/frontend")
+}
+
+group 'fr.litarvan.slark'
+version '1.0.0'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -26,5 +41,26 @@ dependencies {
 
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
     compile 'org.apache.logging.log4j:log4j-core:2.8.2'
+
     compile 'fr.litarvan.commons:litarvan-commons:1.0.0'
+    //compile project(':frontend')
+}
+
+task dist{}
+dist.dependsOn jar
+dist.dependsOn npm_run_prod
+
+task watch{}
+watch.dependsOn npm_run_watch
+
+tasks.build.dependsOn npm_run_build
+tasks.processResources.mustRunAfter npm_run_build
+tasks.processResources.mustRunAfter npm_run_prod
+
+sourceSets {
+    generated {
+        resources {
+            srcDirs = ["$buildDir/resources"]
+        }
+    }
 }

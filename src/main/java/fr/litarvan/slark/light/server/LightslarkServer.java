@@ -8,6 +8,7 @@ import fr.litarvan.commons.crash.ExceptionHandler;
 import fr.litarvan.commons.crash.ReportField;
 import fr.litarvan.commons.io.IOSource;
 import fr.litarvan.slark.light.server.http.Routes;
+import fr.litarvan.slark.light.server.http.controller.MainController;
 import java.io.File;
 import java.net.InetSocketAddress;
 import javax.inject.Inject;
@@ -35,6 +36,9 @@ public class LightslarkServer implements App
     @Inject
     private Routes routes;
 
+    @Inject
+    private MainController main;
+
     @Override
     public void start()
     {
@@ -53,7 +57,9 @@ public class LightslarkServer implements App
 
         LOGGER.info("Starting HTTP engine");
 
+        Spark.staticFileLocation("/assets/web");
         Spark.port(configs.at("app.port", int.class));
+        Spark.notFound(main::home);
 
         Spark.exception(Exception.class, (e, request, response) ->
         {
