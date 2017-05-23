@@ -61,6 +61,12 @@ public class LightslarkServer implements App
         Spark.port(configs.at("app.port", int.class));
         Spark.notFound(main::home);
 
+        if (System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+        {
+            LOGGER.warn("!! DEBUG MODE ENABLED ! DISABLING CSRF PROTECTION !");
+            Spark.after((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+        }
+
         Spark.exception(Exception.class, (e, request, response) ->
         {
             response.type("application/json; charset=utf-8");

@@ -33,6 +33,23 @@ repositories {
     }
 }
 
+sourceSets {
+    generated {
+        java
+        resources {
+            srcDir 'gen/web'
+        }
+    }
+
+    main {
+        compileClasspath += generated.compileClasspath + generated.output
+    }
+}
+
+jar {
+    from sourceSets.generated.output
+}
+
 dependencies {
     compile 'com.sparkjava:spark-core:2.6.0'
     compile 'com.google.inject:guice:4.1.0'
@@ -43,24 +60,19 @@ dependencies {
     compile 'org.apache.logging.log4j:log4j-core:2.8.2'
 
     compile 'fr.litarvan.commons:litarvan-commons:1.0.0'
-    //compile project(':frontend')
+    compile sourceSets.generated.output
 }
 
-task dist{}
+task dist {}
 dist.dependsOn jar
 dist.dependsOn npm_run_prod
 
-task watch{}
-watch.dependsOn npm_run_watch
+tasks.distZip.dependsOn dist
+tasks.processGeneratedResources.mustRunAfter npm_run_prod
 
-tasks.build.dependsOn npm_run_build
-tasks.processResources.mustRunAfter npm_run_build
-tasks.processResources.mustRunAfter npm_run_prod
-
-sourceSets {
-    generated {
-        resources {
-            srcDirs = ["$buildDir/resources"]
-        }
+run {
+    if (project.getProperties().get('debug') == 'true')
+    {
+        args = ['--debug']
     }
 }

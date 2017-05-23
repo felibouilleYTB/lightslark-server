@@ -4,9 +4,9 @@
   "license": "GPLv3",
   "scripts": {
     "ng": "ng",
-    "watch": "ng serve --target=development --outputPath=../build/resources/main/assets/web --sourcemaps --progress",
-    "build": "ng build --target=development --outputPath=../build/resources/main/assets/web --sourcemaps --progress",
-    "prod": "ng build --target=production --aot --outputPath=../build/resources/main/assets/web --vendorChunk --baseHref \"/\" --verbose --progress",
+    "serve": "ng serve --target=development --sourcemaps --progress",
+    "build": "ng build --target=development --outputPath=../gen/web/assets/web --sourcemaps --progress",
+    "prod": "ng build --target=production --aot --outputPath=../gen/web/assets/web --vendorChunk --baseHref \"/\" --verbose --progress",
     "lint": "ng lint"
   },
   "dependencies": {
