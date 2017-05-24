@@ -8,3 +8,4 @@ node/
 frontend/node_modules/
 frontend/dist/
 gen/
+*.log

@@ -106,7 +106,7 @@
     "component-selector": [
       true,
       "element",
-      "app",
+      "slark",
       "kebab-case"
     ],
     "use-input-property-decorator": true,
