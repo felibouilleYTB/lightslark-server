@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#loading {
+    width: 100%;
+    height: 100vh;
+    background: #141718;
+    text-align: center;
+    color: white;
+}
+
+#loading-logo {
+    margin-top: calc(50vh - 130px);
+}
+
+#loading-text {
+    font-family: "Lato", "Arial", sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+    margin-top: 15px;
+}
+
+.btn {
+    background-color: #00c6e5 !important;
+}
+
+.btn:hover, .btn:focus, .tap-target, .btn-floating:hover {
+    background-color: #00b6d5 !important;
+}
+
+input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]) {
+    border-bottom: 1px solid #00c6e5 !important;
+    box-shadow: 0 1px 0 0 #00c6e5 !important;
+}
+
+.spinner-layer {
+    border-color: #00c6e5 !important;
+}

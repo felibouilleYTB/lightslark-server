@@ -1,0 +1,86 @@
+/*
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ *
+ * This file is part of Slark.
+
+ * Slark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Slark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Slark.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.row {
+    margin-bottom: 0;
+}
+
+#nav, #content {
+    min-height: 100vh;
+}
+
+#nav {
+    background: #222831;
+    padding: 0;
+    position: fixed;
+}
+
+#logo {
+    /*background: #fefefe;*/
+    background: #141718;
+    width: 100%;
+    padding: 10px;
+    /*box-shadow: -7px 2px 10px black;*/
+}
+
+#content {
+    /*background: #fefefe;*/
+    background: #141718;
+    /*box-shadow: -45px 0 10px black;*/
+    box-shadow: inset 2px 1px 10px 0 black;
+    color: white;
+}
+
+nav {
+    background: none;
+    /*box-shadow: -1px -8vh 2px 1px black;*/
+}
+
+@media only screen and (min-height: 800px) {
+    nav {
+        margin-top: 7.5vh;
+    }
+}
+
+nav li {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+nav, ul {
+    height: auto;
+}
+
+nav ul, nav li, nav a {
+    width: 100%;
+}
+
+#logout {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+    padding: 0;
+
+    width: 100%;
+}
+
+nav i {
+    height: auto;
+    padding-right: 6px;
+}
