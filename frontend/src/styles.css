@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
+@import '~@angular/material/prebuilt-themes/purple-green.css';
 
 html, body {
     margin: 0;
     padding: 0;
+    background: #141718;
 }
 
 #loading {
     width: 100%;
-    height: 100vh;
-    background: #141718;
     text-align: center;
     color: white;
 }

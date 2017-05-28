@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent
 {
-    logout()
-    {
-
-    }
+    routes = [
+        { name: 'Accueil', icon: 'home' },
+        { name: 'Fichiers', icon: 'files-o' },
+        { name: 'Whitelist', icon: 'list' },
+        { name: 'Statistiques', icon: 'area-chart' },
+        { name: 'Paramètres', icon: 'cogs' },
+        { name: 'À Propos', icon: 'question-circle' },
+        { name: 'Se déconnecter', icon: 'sign-out' }
+    ];
 }

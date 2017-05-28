@@ -22,7 +22,5 @@ export class WhitelistComponent implements OnInit
                 type: 'folder'
             }
         ];
-
-        $('.modal').modal({});
     }
 }
