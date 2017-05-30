@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../auth.service';
 
 @Component({
     selector: 'slark-app',
@@ -8,12 +9,17 @@ import { Component } from '@angular/core';
 export class AppComponent
 {
     routes = [
-        { name: 'Accueil', icon: 'home' },
-        { name: 'Fichiers', icon: 'files-o' },
-        { name: 'Whitelist', icon: 'list' },
-        { name: 'Statistiques', icon: 'area-chart' },
-        { name: 'Paramètres', icon: 'cogs' },
+        { name: 'Accueil', icon: 'home', auth: true },
+        { name: 'Fichiers', icon: 'files-o', auth: true },
+        { name: 'Whitelist', icon: 'list', path: 'admin/whitelist', auth: true },
+        { name: 'Statistiques', icon: 'area-chart', auth: true },
+        { name: 'Paramètres', icon: 'cogs', auth: true },
         { name: 'À Propos', icon: 'question-circle' },
-        { name: 'Se déconnecter', icon: 'sign-out' }
+        { name: 'Se Déconnecter', icon: 'sign-out', right: true, auth: true },
+        { name: 'Se Connecter', icon: 'sign-in', path: 'auth/login', right: true, auth: false }
     ];
+
+    constructor(public auth: AuthService)
+    {
+    }
 }

@@ -2,14 +2,17 @@
     <ul>
         <li id="nav-logo"><img src="assets/images/logo.png"></li>
 
-        <li *ngFor="let route of routes" class="clickable ripple" [class.right]="route.icon === 'sign-out'" md-ripple md-tooltip="{{ route.name }}" md-tooltip-position="below"><i class="fa fa-{{ route.icon }}"></i></li>
+        <div *ngFor="let route of routes">
+            <li *ngIf="!route.hasOwnProperty('auth') || (auth.logged ? route.auth : !route.auth)"
+                [routerLink]="route.hasOwnProperty('path') ? route.path : ''"
 
-        <!-- <li class="clickable ripple" md-ripple md-tooltip="Accueil" md-tooltip-position="below"><i class="fa fa-home"></i></li>
-        <li class="clickable ripple" md-ripple md-tooltip="Fichiers" md-tooltip-position="below"><i class="fa fa-files-o"></i></li>
-        <li class="clickable ripple" md-ripple md-tooltip="Whitelist" md-tooltip-position="below"><i class="fa fa-list"></i></li>
-        <li class="clickable ripple" md-ripple md-tooltip="Statistiques" md-tooltip-position="below"><i class="fa fa-area-chart"></i></li>
-        <li class="clickable ripple" md-ripple md-tooltip="Paramètres" md-tooltip-position="below"><i class="fa fa-cogs"></i></li>
-        <li class="clickable ripple" md-ripple md-tooltip="À Propos" md-tooltip-position="below"><i class="fa fa-question-circle"></i></li>
-        <li class="clickable right ripple" md-ripple md-tooltip="Se déconnecter" md-tooltip-position="below"><i class="fa fa-sign-out"></i></li> -->
+                class="clickable ripple" [class.right]="route.hasOwnProperty('right') && route.right"
+                md-ripple md-tooltip="{{ route.name }}" md-tooltip-position="below">
+
+                <i class="fa fa-{{ route.icon }}"></i>
+            </li>
+        </div>
     </ul>
 </nav>
+
+<router-outlet></router-outlet>

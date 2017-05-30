@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { WhitelistEntry } from '../../whitelist-entry';
 
 @Component({
@@ -10,8 +11,14 @@ export class WhitelistComponent implements OnInit
 {
     entries: WhitelistEntry[];
 
+    constructor(private title: Title)
+    {
+    }
+
     ngOnInit()
     {
+        this.title.setTitle('Lightslark Server - Whitelist');
+
         this.entries = [
             {
                 value: 'truc.txt',
