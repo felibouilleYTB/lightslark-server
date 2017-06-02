@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../auth.service';
+import { ConfigService } from '../../config.service';
 
 @Component({
     selector: 'slark-login',
@@ -9,8 +10,11 @@ import { AuthService } from '../../auth.service';
 })
 export class LoginComponent implements OnInit
 {
-    constructor(private title: Title, private auth: AuthService)
+    server: String;
+
+    constructor(private title: Title, private auth: AuthService, private config: ConfigService)
     {
+        this.server = config.server;
     }
 
     ngOnInit()

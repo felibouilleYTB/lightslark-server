@@ -1,0 +1,39 @@
+:host {
+    display: block;
+    font-family: "Lato", "Arial", sans-serif;
+}
+
+a, a:focus, a:visited {
+    color: #369fd4;
+    text-decoration: none;
+}
+
+h3 {
+    font-weight: 100;
+    font-size: 35px;
+}
+
+#left-block {
+    margin: 50px 25px 50px 50px;
+}
+
+#left-block p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+#right-block {
+    margin: 50px 50px 50px 25px;
+}
+
+#left-block, #right-block {
+    width: calc(50% - 125px);
+    text-align: center;
+    display: inline-block;
+    float: left;
+}
+
+#logo {
+    width: 87.5%;
+    margin-top: 4vh;
+}
