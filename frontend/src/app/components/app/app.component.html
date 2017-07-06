@@ -2,7 +2,18 @@
     <ul>
         <li id="nav-logo"><img src="assets/images/logo.png"></li>
 
-        <li *ngFor="let route of routes" class="clickable ripple" [class.right]="route.icon === 'sign-out'" md-ripple md-tooltip="{{ route.name }}" md-tooltip-position="below"><i class="fa fa-{{ route.icon }}"></i></li>
+        <li
+                *ngFor="let route of routes"
+
+                class="clickable ripple"
+                [class.right]="route.icon === 'sign-out'"
+
+                md-ripple
+                md-tooltip="{{ route.name }}"
+                md-tooltip-position="below"
+        >
+            <i class="fa fa-{{ route.icon }}"></i>
+        </li>
 
         <!-- <li class="clickable ripple" md-ripple md-tooltip="Accueil" md-tooltip-position="below"><i class="fa fa-home"></i></li>
         <li class="clickable ripple" md-ripple md-tooltip="Fichiers" md-tooltip-position="below"><i class="fa fa-files-o"></i></li>
