@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../auth.service';
 import { ConfigService } from '../../config.service';
@@ -8,8 +8,14 @@ import { ConfigService } from '../../config.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit
+export class LoginComponent implements OnInit, AfterViewInit
 {
+    @ViewChildren('email')
+    email;
+
+    @ViewChildren('password')
+    password;
+
     server: String;
 
     constructor(private title: Title, private auth: AuthService, private config: ConfigService)
@@ -20,6 +26,11 @@ export class LoginComponent implements OnInit
     ngOnInit()
     {
         this.title.setTitle('Lightslark Server - Connexion');
+    }
+
+    ngAfterViewInit()
+    {
+        (this.email.first.nativeElement.value === '' ? this.email : this.password).first.nativeElement.focus();
     }
 
     login()
