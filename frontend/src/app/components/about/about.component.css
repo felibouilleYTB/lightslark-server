@@ -17,10 +17,3 @@
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class AuthService
-{
-    logged: boolean;
-}

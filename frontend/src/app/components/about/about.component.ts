@@ -17,10 +17,22 @@
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
-@Injectable()
-export class AuthService
+@Component({
+    selector: 'slark-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css']
+})
+export class AboutComponent implements OnInit
 {
-    logged: boolean;
+    constructor(private title: Title)
+    {
+    }
+
+    ngOnInit()
+    {
+        this.title.setTitle('Lightslark Server - À propos');
+    }
 }
