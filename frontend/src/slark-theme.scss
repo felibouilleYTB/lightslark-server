@@ -2,8 +2,8 @@
 
 @include mat-core();
 
-$slark-primary: mat-palette($mat-cyan);
-$slark-accent:  mat-palette($mat-light-blue, A200, A700, A400);
+$slark-primary: mat-palette($mat-blue, 500, 600, 700);
+$slark-accent:  mat-palette($mat-light-blue, 600, A700, 800);
 
 $slark-warn:    mat-palette($mat-red);
 

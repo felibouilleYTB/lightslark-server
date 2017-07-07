@@ -56,16 +56,16 @@ nav li {
 }
 
 #nav-logo {
-    background-color: #111415;
+    background-color: #12aef5;
 
-    width: 49px;
-    height: 49px;
-    padding: 9px 8px 7px;
+    width: 45px;
+    height: 45px;
+    padding: 11px 10px 9px;
 }
 
 #nav-logo img {
-    width: 49px;
-    height: 49px;
+    width: 45px;
+    height: 45px;
 
     display: block;
 }

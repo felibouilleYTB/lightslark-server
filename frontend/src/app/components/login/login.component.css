@@ -4,12 +4,13 @@
 }
 
 a, a:focus, a:visited {
-    color: #369fd4;
+    color: #12aef5;
     text-decoration: none;
 }
 
 a:hover {
-    color: #39b5eb;
+    color: #1294cd;
+    cursor: pointer;
 }
 
 h3 {

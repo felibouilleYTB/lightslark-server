@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li id="nav-logo"><img src="assets/images/logo.png"></li>
+        <li id="nav-logo"><img src="assets/images/logo_empty.png"></li>
 
         <div *ngFor="let route of routes">
             <li *ngIf="!route.hasOwnProperty('auth') || (auth.logged ? route.auth : !route.auth)"
