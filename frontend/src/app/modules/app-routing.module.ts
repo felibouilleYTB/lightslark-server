@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MdButtonModule, MdCardModule, MdCheckboxModule, MdInputModule } from '@angular/material';
+import {
+    MdButtonModule, MdCardModule, MdCheckboxModule, MdInputModule,
+    MdProgressSpinnerModule
+} from '@angular/material';
 import { WhitelistComponent } from '../components/whitelist/whitelist.component';
 import { LoginComponent } from '../components/login/login.component';
 import { AuthService } from '../auth.service';
@@ -30,11 +33,13 @@ const routes: Routes = [
     imports: [
         CommonModule,
         FormsModule,
+        ReactiveFormsModule,
 
         MdInputModule,
         MdCheckboxModule,
         MdButtonModule,
         MdCardModule,
+        MdProgressSpinnerModule,
 
         RouterModule.forRoot(routes)
     ],

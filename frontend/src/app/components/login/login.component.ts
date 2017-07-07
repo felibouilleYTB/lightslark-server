@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChildren } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../auth.service';
 import { ConfigService } from '../../config.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'slark-login',
@@ -16,7 +17,17 @@ export class LoginComponent implements OnInit, AfterViewInit
     @ViewChildren('password')
     password;
 
+    logging = false;
     server: String;
+    loginForm = new FormGroup({
+        email: new FormControl('', [
+            Validators.required,
+            Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+        ]),
+        password: new FormControl('', [
+            Validators.required
+        ])
+    });
 
     constructor(private title: Title, private auth: AuthService, private config: ConfigService)
     {
@@ -35,6 +46,6 @@ export class LoginComponent implements OnInit, AfterViewInit
 
     login()
     {
-        this.auth.logged = true;
+        this.logging = true;
     }
 }

@@ -5,7 +5,7 @@
 
     <p>
         Ici se trouve le serveur de mise à jour de <b>{{ server }}</b>. <br/><br/>
-        Ce serveur hebèrge les fichiers de {{ server }} et gère tout ce qui est à la mise à jour du programme.
+        Ce serveur hébèrge les fichiers de {{ server }} et gère tout ce qui est en relation avec la mise à jour du programme.
         Cet espace est reservé aux administrateurs de {{ server }}, merci donc de vous connecter avec vos identifiants en utilisant le formulaire ci dessous.<br/><br />
         {{ server }} utilise <a href="https://github.com/slark-update/lightslark">Lightslark</a>, un système de mise à jour libre, simple, et léger.
     </p>
@@ -15,15 +15,27 @@
     <md-card id="login-block">
         <h3>Connexion</h3>
 
-        <md-input-container>
-            <input mdInput #email id="email" type="email" placeholder="E-Mail">
-        </md-input-container>
-        <md-input-container>
-            <input mdInput #password id="password" type="password" placeholder="Mot de passe">
-        </md-input-container>
+        <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+            <md-input-container>
+                <input mdInput #email id="email" type="email" placeholder="E-Mail" [readOnly]="logging" formControlName="email">
+                <md-error *ngIf="loginForm.get('email').hasError('pattern')">
+                    Veuillez entrer une addresse email valide
+                </md-error>
+                <md-error *ngIf="loginForm.get('email').hasError('required')">
+                    Ce champ est <strong>obligatoire</strong>
+                </md-error>
+            </md-input-container>
+            <md-input-container>
+                <input mdInput #password id="password" type="password" placeholder="Mot de passe" [readOnly]="logging" formControlName="password">
+                <md-error *ngIf="loginForm.get('password').hasError('required')">
+                    Ce champ est <strong>obligatoire</strong>
+                </md-error>
+            </md-input-container>
 
-        <md-checkbox>Se souvenir de moi</md-checkbox>
+            <md-checkbox [disabled]="logging">Se souvenir de moi</md-checkbox>
 
-        <button md-raised-button>Se connecter</button>
+            <button type="submit" *ngIf="!logging" md-raised-button [disabled]="loginForm.invalid">Se connecter</button>
+            <md-progress-spinner id="logging" *ngIf="logging" mode="indeterminate"></md-progress-spinner>
+        </form>
     </md-card>
 </div>

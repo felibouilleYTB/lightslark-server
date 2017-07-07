@@ -4,9 +4,12 @@
 
 $slark-primary: mat-palette($mat-blue, 500, 600, 700);
 $slark-accent:  mat-palette($mat-light-blue, 600, A700, 800);
-
 $slark-warn:    mat-palette($mat-red);
 
 $slark-theme: mat-light-theme($slark-primary, $slark-accent, $slark-warn);
 
 @include angular-material-theme($slark-theme);
+
+.mat-ripple-element {
+  background-color: rgba(white, $mat-ripple-color-opacity);
+}

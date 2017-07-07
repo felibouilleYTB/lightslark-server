@@ -69,3 +69,25 @@ h3 {
     text-align: left;
     display: block;
 }
+
+@media print, screen and (max-width: 1200px) {
+    #right-block, #left-block {
+        width: 85%;
+        margin-left: 7.5%;
+    }
+
+    #right-block {
+        margin-top: 0;
+    }
+
+    #left-block {
+        margin-bottom: 0;
+    }
+}
+
+#logging {
+    width: 36px;
+    height: 36px;
+    margin-top: 10px;
+    margin-left: calc(50% - 18px);
+}
