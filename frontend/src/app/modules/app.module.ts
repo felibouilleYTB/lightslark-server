@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,11 +12,13 @@ import { MdRippleModule, MdTooltipModule } from '@angular/material';
         AppComponent
     ],
     imports: [
-        FormsModule,
-        HttpModule,
-        AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
+
+        HttpModule,
+
+        AppRoutingModule,
+
         MdTooltipModule,
         MdRippleModule
     ],

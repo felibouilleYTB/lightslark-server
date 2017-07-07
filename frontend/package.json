@@ -4,7 +4,7 @@
   "license": "GPLv3",
   "scripts": {
     "ng": "ng",
-    "serve": "ng serve --target=development --sourcemaps --progress",
+    "serve": "ng serve --target=development --sourcemaps --progress --poll=2000",
     "build": "ng build --target=development --outputPath=../gen/web/assets/web --sourcemaps --progress",
     "prod": "ng build --target=production --aot --outputPath=../gen/web/assets/web --vendorChunk --baseHref \"/\" --verbose --progress",
     "lint": "ng lint"

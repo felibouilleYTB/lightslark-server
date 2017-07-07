@@ -1,0 +1,28 @@
+<div id="left-block">
+    <img id="logo" src="assets/images/logo-full.png" />
+
+    <h3>Bienvenue sur Slark !</h3>
+
+    <p>
+        Ici se trouve le serveur de mise à jour de <b>{{ server }}</b>. <br/><br/>
+        Cet espace est reservé aux administrateurs de {{ server }}, merci donc de vous connecter avec vos identifiants en utilisant le formulaire ci dessous.<br/><br />
+        {{ server }} utilise <a href="https://github.com/slark-update/lightslark">Lightslark</a>, un système de mise à jour libre, simple, et léger.
+    </p>
+</div>
+
+<div id="right-block">
+    <md-card id="login-block">
+        <h3>Connexion</h3>
+
+        <md-input-container>
+            <input mdInput id="email" type="email" placeholder="E-Mail">
+        </md-input-container>
+        <md-input-container>
+            <input mdInput id="password" type="password" placeholder="Mot de passe">
+        </md-input-container>
+
+        <md-checkbox>Se souvenir de moi</md-checkbox>
+
+        <button md-raised-button>Se connecter</button>
+    </md-card>
+</div>
