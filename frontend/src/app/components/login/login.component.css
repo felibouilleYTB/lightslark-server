@@ -38,7 +38,7 @@ h3 {
 }
 
 #left-block {
-    margin: 8.5vh 4.25vh 3vh 8.5vh;
+    margin: 8.5vh 2.75% 3vh 4.5%;
 }
 
 #left-block p {
@@ -47,11 +47,11 @@ h3 {
 }
 
 #right-block {
-    margin: 8.5vh 8.5vh 3vh 4.25vh;
+    margin: 8.5vh 4.5% 3vh 2.75%;
 }
 
 #left-block, #right-block {
-    width: calc(50% - 125px);
+    width: 42.75%;
     text-align: center;
     display: inline-block;
     float: left;
@@ -60,6 +60,8 @@ h3 {
 #logo {
     width: 87.5%;
     margin-top: 4vh;
+    max-width: 725px;
+    max-height: 200px;
 }
 
 #login-block {
@@ -90,6 +92,15 @@ h3 {
     display: block;
 }
 
+
+#logging {
+    width: 36px;
+    height: 36px;
+    margin-top: 10px;
+    margin-left: calc(50% - 18px);
+}
+
+/* Responsive rules */
 
 @media print, screen and (max-height: 850px) {
     #right-block, #left-block {
@@ -126,9 +137,25 @@ h3 {
     }
 }
 
-#logging {
-    width: 36px;
-    height: 36px;
-    margin-top: 10px;
-    margin-left: calc(50% - 18px);
+@media print, screen and (min-height: 1000px) {
+    #left-block, #right-block {
+        margin-top: 13.5vh;
+    }
+}
+
+@media print, screen and (min-height: 1150px) {
+    #left-block {
+        margin-left: 8%;
+        margin-right: 3.5%;
+    }
+
+    #right-block {
+        margin-left: 3.5%;
+        margin-right: 8%;
+    }
+
+    #left-block, #right-block {
+        width: 38.5%;
+        margin-top: 15vh;
+    }
 }
