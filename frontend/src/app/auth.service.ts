@@ -31,11 +31,12 @@ export class AuthService
     {
     }
 
-    login(email: string, password: string): Observable<boolean>
+    login(email: string, password: string, remember: boolean): Observable<boolean>
     {
         return this.http.post(`${API_URL}/auth/login`, '', { params: {
             email: email,
-            password: password
+            password: password,
+            remember: remember
         }}).map(res => {
             return this.logged = (res.json().success || false);
         }).catch(error => {

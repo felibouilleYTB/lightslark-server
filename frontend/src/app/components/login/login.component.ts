@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit, AfterViewInit
         ]),
         password: new FormControl('', [
             Validators.required
-        ])
+        ]),
+        remember: new FormControl()
     });
 
     constructor(private title: Title, private auth: AuthService, private config: ConfigService, private snack: MdSnackBar, private router: Router)
@@ -58,6 +59,9 @@ export class LoginComponent implements OnInit, AfterViewInit
     ngOnInit()
     {
         this.title.setTitle('Lightslark Server - Connexion');
+
+        this.loginForm.get('email').setValue(localStorage.getItem('email') || '');
+        this.loginForm.get('remember').setValue(localStorage.getItem('remember') == 'true');
     }
 
     ngAfterViewInit()
@@ -67,8 +71,14 @@ export class LoginComponent implements OnInit, AfterViewInit
 
     login()
     {
+        const email = this.loginForm.get('email').value;
+        const remember = this.loginForm.get('remember').value;
+
+        localStorage.setItem('email', email);
+        localStorage.setItem('remember', remember.toString());
+
         this.logging = true;
-        this.auth.login(this.loginForm.get('email').value, this.loginForm.get('password').value)
+        this.auth.login(email, this.loginForm.get('password').value, remember)
             .subscribe(
                 success => {
                     this.snack.open(success ? `Connecté ! Bienvenue sur Slark !` : `Mauvais pseudo ou mot de passe`, 'OK', {
@@ -77,7 +87,7 @@ export class LoginComponent implements OnInit, AfterViewInit
                     this.router.navigateByUrl('/');
                 },
                 error => {
-                    this.snack.open(`Erreur (${this.auth.logged}) lors de la connexion : ${error}`, 'OK', {
+                    this.snack.open(`Erreur lors de la connexion : ${error}`, 'OK', {
                         duration: 5000
                     });
                     this.logging = false;

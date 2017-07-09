@@ -51,7 +51,7 @@
                 </md-error>
             </md-input-container>
 
-            <md-checkbox [disabled]="logging">Se souvenir de moi</md-checkbox>
+            <md-checkbox [disabled]="logging" formControlName="remember">Se souvenir de moi</md-checkbox>
 
             <button type="submit" *ngIf="!logging" md-raised-button [disabled]="loginForm.invalid">Se connecter</button>
             <md-progress-spinner id="logging" *ngIf="logging" mode="indeterminate"></md-progress-spinner>
