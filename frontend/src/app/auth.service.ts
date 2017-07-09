@@ -18,9 +18,29 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { API_URL } from '../environments/environment';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService
 {
-    logged: boolean;
+    logged = false;
+
+    constructor(private http: Http)
+    {
+    }
+
+    login(email: string, password: string): Observable<boolean>
+    {
+        return this.http.post(`${API_URL}/auth/login`, '', { params: {
+            email: email,
+            password: password
+        }}).map(res => {
+            return this.logged = (res.json().success || false);
+        }).catch(error => {
+            console.error(error);
+            return Observable.throw(error);
+        });
+    }
 }

@@ -3,7 +3,6 @@ package fr.litarvan.slark.light.server;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import fr.litarvan.commons.App;
-import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

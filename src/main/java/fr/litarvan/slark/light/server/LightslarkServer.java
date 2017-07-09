@@ -91,6 +91,10 @@ public class LightslarkServer implements App
             {
                 exceptionHandler.handle(new InRequestException(e, request));
             }
+            else if (System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+            {
+                response.header("Access-Control-Allow-Origin", "*");
+            }
         });
 
         routes.load();

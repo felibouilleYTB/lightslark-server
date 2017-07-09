@@ -17,7 +17,6 @@ public final class Routes
     public void load()
     {
         get("/", main::home);
-        get("/yolo", (request, response) -> Controller.SUCCESS);
         path("/api", () -> {
             path("/auth", () -> {
                 post("/login", auth::login);
