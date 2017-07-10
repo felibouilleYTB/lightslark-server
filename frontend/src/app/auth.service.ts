@@ -22,6 +22,8 @@ import { Http, Response } from '@angular/http';
 import { API_URL } from '../environments/environment';
 import { Observable } from 'rxjs/Observable';
 
+import 'rxjs/add/operator/catch';
+
 @Injectable()
 export class AuthService
 {
@@ -33,11 +35,14 @@ export class AuthService
 
     login(email: string, password: string, remember: boolean): Observable<boolean>
     {
-        return this.http.post(`${API_URL}/auth/login`, '', { params: {
-            email: email,
-            password: password,
-            remember: remember
-        }}).map(res => this.logged = (this.extract(res).success || false))
+        return this.http.post(`${API_URL}/auth/login`, '', {
+            params: {
+                email: email,
+                password: password,
+                remember: remember
+            },
+            withCredentials: true
+        }).map(res => this.logged = (this.extract(res).success || false))
             .catch(error => Observable.throw(error));
     }
 

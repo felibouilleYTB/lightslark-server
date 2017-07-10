@@ -34,6 +34,7 @@ public class AuthController extends Controller
     public String login(Request request, Response response) throws APIError
     {
         String ip = request.ip();
+
         long time = System.currentTimeMillis();
 
         if (loginHistory.containsKey(ip) && time - loginHistory.get(ip) <= LOGIN_MINIMUM_PERIOD)
@@ -53,7 +54,7 @@ public class AuthController extends Controller
             String token = RandomStringUtils.randomAlphanumeric(512);
 
             tokens.put(ip, new AuthToken(token, System.currentTimeMillis() + TimeUnit.DAYS.toMillis(remember ? 30 : 1)));
-            response.cookie("token", token);
+            response.cookie("token", token, 55555, true);
 
             return success(response);
         }
@@ -76,7 +77,7 @@ public class AuthController extends Controller
         String ip = request.ip();
         AuthToken token = tokens.get(ip);
 
-        if (token != null && token.getValidUntil() >= System.currentTimeMillis())
+        if (token != null && System.currentTimeMillis() >= token.getValidUntil())
         {
             tokens.remove(ip);
             token = null;

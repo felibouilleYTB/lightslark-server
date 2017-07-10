@@ -17,9 +17,19 @@
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { WhitelistEntry } from '../../whitelist-entry';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { DataSource } from '@angular/cdk';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
+import { isNullOrUndefined } from 'util';
 
 @Component({
     selector: 'slark-whitelist',
@@ -28,7 +38,13 @@ import { WhitelistEntry } from '../../whitelist-entry';
 })
 export class WhitelistComponent implements OnInit
 {
-    entries: WhitelistEntry[];
+    displayedColumns = ['name', 'type', 'action'];
+    database = new WhitelistDatabase();
+    data: WhitelistDataSource | null;
+    editing: string;
+
+    @ViewChild('filter')
+    filter: ElementRef;
 
     constructor(private title: Title)
     {
@@ -37,16 +53,139 @@ export class WhitelistComponent implements OnInit
     ngOnInit()
     {
         this.title.setTitle('Lightslark Server - Whitelist');
+        this.data = new WhitelistDataSource(this.database);
 
-        this.entries = [
+        Observable.fromEvent(this.filter.nativeElement, 'keyup')
+            .debounceTime(150)
+            .distinctUntilChanged()
+            .subscribe(() => {
+                if (!this.data)
+                {
+                    return;
+                }
+
+                this.data.filter = this.filter.nativeElement.value;
+            });
+
+        document.addEventListener('click', ev =>
+        {
+            const editField = document.getElementById(`edit-${this.editing}`);
+
+            if (ev.target != editField && !isNullOrUndefined(editField))
             {
-                value: 'truc.txt',
-                type: 'file'
-            },
-            {
-                value: 'lol',
-                type: 'folder'
+                this.editing = null;
             }
+        });
+
+        document.addEventListener('keyup', ev =>
+        {
+            console.log(ev.key);
+
+            if (ev.key == 'Enter')
+            {
+                this.editing = null;
+            }
+
+            const editNum = parseInt(this.editing);
+
+            if (!isNullOrUndefined(this.editing))
+            {
+                if ((ev.key == 'ArrowDown' || ev.key == 'Tab') && editNum != this.database.data.length)
+                {
+                    this.edit((editNum + 1).toString());
+                }
+                else if (ev.key == 'ArrowUp' && editNum != 1)
+                {
+                    this.edit((editNum - 1).toString());
+                }
+            }
+        });
+    }
+
+    edit(id: string)
+    {
+        setTimeout(_ =>
+        {
+            this.editing = id;
+        }, 25);
+
+        setTimeout(_ =>
+        {
+            document.getElementById(`edit-${id}`).focus();
+        }, 50);
+    }
+}
+
+export interface WhitelistEntry
+{
+    id: string;
+    name: string;
+    type: string;
+}
+
+export class WhitelistDatabase
+{
+    dataChange: BehaviorSubject<WhitelistEntry[]> = new BehaviorSubject<WhitelistEntry[]>([]);
+
+    constructor()
+    {
+        const names = ["trucs.json", "username.txt", "launcher/launcher.properties", "config/", "*.log"];
+        const types = ["file", "file", "file", "folder", "glob"];
+
+        for (let i = 0; i < 5; i++) {
+            const copiedData = this.data.slice();
+            copiedData.push({
+                id: (this.data.length + 1).toString(),
+                name: names[i],
+                type: types[i]
+            });
+            this.dataChange.next(copiedData);
+        }
+    }
+
+    get data(): WhitelistEntry[]
+    {
+        return this.dataChange.value;
+    }
+}
+
+export class WhitelistDataSource extends DataSource<any>
+{
+    _filterChange = new BehaviorSubject('');
+
+    constructor(private _database: WhitelistDatabase)
+    {
+        super();
+    }
+
+    get filter()
+    {
+        return this._filterChange.value;
+    }
+
+    set filter(filter: string)
+    {
+        this._filterChange.next(filter);
+    }
+
+    connect(): Observable<WhitelistEntry[]>
+    {
+        const displayedDataChange = [
+            this._database.dataChange,
+            this._filterChange
         ];
+
+        return Observable.merge(...displayedDataChange).map(() =>
+        {
+            return this._database.data.slice().filter((entry: WhitelistEntry) =>
+            {
+                let search = (entry.name + entry.type).toLowerCase();
+                return search.indexOf(this.filter.toLowerCase()) != -1;
+            })
+        })
+    }
+
+    disconnect()
+    {
     }
 }

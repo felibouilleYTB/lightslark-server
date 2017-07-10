@@ -48,7 +48,7 @@ $ now
 ## Building
 
 ```bash
-$ gradle distZip
+$ ./gradlew distZip
 ```
 
 Then the output is build/distributions/lightslark-server-1.0.0.zip
@@ -56,7 +56,7 @@ Then the output is build/distributions/lightslark-server-1.0.0.zip
 ## Running
 
 ```bash
-gradle npm_run_prod run
+./gradlew yarn_prod run
 ```
 
 Then go to http://your-host:34456/
@@ -67,9 +67,14 @@ To test Slark when developing, you need to run simultaneously :
 
 ```bash
 $ cd frontend
-$ npm run serve
+$ ./gradlew yarn_serve
 ```
 
+And
+
 ```bash
-$ gradle run -Pdebug=true
+$ ./gradlew run -Pdebug=true
 ```
+
+It will also refresh the changes of the frontend when you will modify it. 
+**If you run the Java backend in your IDE, instead of using gradle, launch the Main class with the VM Args : `-Dslark.debug=true`**

@@ -22,8 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
-    MdButtonModule, MdCardModule, MdCheckboxModule, MdInputModule,
-    MdProgressSpinnerModule, MdSnackBarModule
+    MdButtonModule, MdCardModule, MdCheckboxModule, MdCoreModule, MdExpansionModule, MdInputModule,
+    MdProgressSpinnerModule, MdRippleModule, MdSnackBarModule, MdTableModule, MdTooltipModule
 } from '@angular/material';
 import { WhitelistComponent } from '../components/whitelist/whitelist.component';
 import { LoginComponent } from '../components/login/login.component';
@@ -31,6 +31,7 @@ import { AuthService } from '../auth.service';
 import { ConfigService } from '../config.service';
 import { AboutComponent } from '../components/about/about.component';
 import {HttpModule, JsonpModule} from "@angular/http";
+import { CdkTableModule } from '@angular/cdk';
 
 const routes: Routes = [
     // Admin
@@ -63,12 +64,17 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
 
+        CdkTableModule,
+
+        MdTooltipModule,
         MdInputModule,
         MdCheckboxModule,
         MdButtonModule,
         MdCardModule,
         MdProgressSpinnerModule,
         MdSnackBarModule,
+        MdTableModule,
+        MdRippleModule,
 
         HttpModule,
         JsonpModule,

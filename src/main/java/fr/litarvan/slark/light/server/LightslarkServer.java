@@ -83,7 +83,7 @@ public class LightslarkServer implements App
             response.type("application/json; charset=utf-8");
 
             JsonObject rep = new JsonObject();
-            rep.addProperty("success", "false");
+            rep.addProperty("success", false);
 
             if (e instanceof APIError)
             {

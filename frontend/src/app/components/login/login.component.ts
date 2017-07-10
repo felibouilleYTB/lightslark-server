@@ -84,7 +84,13 @@ export class LoginComponent implements OnInit, AfterViewInit
                     this.snack.open(success ? `Connecté ! Bienvenue sur Slark !` : `Mauvais pseudo ou mot de passe`, 'OK', {
                         duration: 3000
                     });
-                    this.router.navigateByUrl('/');
+
+                    if (success)
+                    {
+                        this.router.navigateByUrl('/');
+                    }
+
+                    this.logging = false;
                 },
                 error => {
                     this.snack.open(`Erreur lors de la connexion : ${error}`, 'OK', {

@@ -17,7 +17,7 @@
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#container {
+/*#container {
     padding: 25px;
     text-align: center;
 }
@@ -51,8 +51,90 @@
 }
 
 .btn-floating {
-    /* background-color: #12aef5; */
+    /* background-color: #12aef5;
     position: absolute;
     bottom: 17.5px;
     right: 15px;
+}*/
+
+md-card {
+    color: black;
+    margin: 100px;
+}
+
+.whitelist-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+    font-family: "Roboto", "Arial", sans-serif;
+}
+
+.whitelist-header {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    pading-left: 10px;
+    font-size: 20px;
+    background-color: white;
+}
+
+.mat-input-container {
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.mat-table {
+    overflow: auto;
+}
+
+.type-icon {
+    padding-right: 5px;
+}
+
+.action-button {
+    position: relative;
+    outline: none;
+    border: none;
+
+    background-color: #f4f4f4;
+    transition: background-color 125ms ease-in-out;
+
+    text-align: center;
+
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+}
+
+.action-button:hover {
+    cursor: pointer;
+    background-color: #ededed;
+}
+
+.action-button i {
+    font-size: 16px;
+}
+
+.file-tag {
+    height: 25px;
+    padding: 5px;
+
+    border-radius: 3px;
+
+    transition: background-color 125ms ease-in-out;
+}
+
+.file-tag:hover {
+    background-color: #f0f0f0;
+    cursor: text;
+}
+
+md-input-container {
+    width: calc(100% - 40px);
+}
+
+.hidden {
+    display: none;
 }

@@ -8,7 +8,7 @@ import spark.Response;
 
 public class Controller
 {
-    public static final String SUCCESS = "{\n    \"success\": \"true\"\n}";
+    public static final String SUCCESS = "{\n    \"success\": true\n}";
 
     @Inject
     protected Gson gson;
