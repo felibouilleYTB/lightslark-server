@@ -18,16 +18,17 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { API_URL } from '../environments/environment';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class AuthService
 {
-    logged = false;
+    token = null;
 
     constructor(private http: Http)
     {
@@ -42,16 +43,33 @@ export class AuthService
                 remember: remember
             },
             withCredentials: true
-        }).map(res => this.logged = (this.extract(res).success || false))
-            .catch(error => Observable.throw(error));
+        }).map(res => {
+            const json = this.extract(res);
+            this.token = (json.token || null);
+
+            return json.success || false;
+        }).catch(error => Observable.throw(error));
     }
 
     logout(): Observable<boolean>
     {
         return this.http.post(`${API_URL}/auth/logout`, '', {
-            withCredentials: true
-        }).map(res => !(this.logged = !(this.extract(res).success || false)))
-            .catch(error => Observable.throw(error));
+            headers: new Headers({
+                'Token': this.token
+            })
+        }).map(res => {
+            const json = this.extract(res);
+            const success = json.success || false;
+
+            this.token = success ? null : this.token;
+
+            return success;
+        }).catch(error => Observable.throw(error));
+    }
+
+    get logged(): boolean
+    {
+        return this.token != null;
     }
 
     extract(res: Response): any

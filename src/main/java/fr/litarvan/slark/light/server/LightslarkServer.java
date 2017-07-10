@@ -7,6 +7,7 @@ import fr.litarvan.commons.config.ConfigProvider;
 import fr.litarvan.commons.crash.ExceptionHandler;
 import fr.litarvan.commons.crash.ReportField;
 import fr.litarvan.commons.io.IOSource;
+import fr.litarvan.slark.light.server.http.Controller;
 import fr.litarvan.slark.light.server.http.Routes;
 import fr.litarvan.slark.light.server.http.controller.MainController;
 import java.io.File;
@@ -68,6 +69,14 @@ public class LightslarkServer implements App
         {
             response.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
             response.header("Access-Control-Allow-Credentials", "true");
+
+            if (request.requestMethod().toLowerCase().equals("options"))
+            {
+                response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                response.header("Access-Control-Allow-Headers", "origin, x-csrftoken, content-type, token, accept");
+
+                response.body(Controller.SUCCESS);
+            }
         };
 
         if (this.debug = System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))

@@ -54,9 +54,12 @@ public class AuthController extends Controller
             String token = RandomStringUtils.randomAlphanumeric(512);
 
             tokens.put(ip, new AuthToken(token, System.currentTimeMillis() + TimeUnit.DAYS.toMillis(remember ? 30 : 1)));
-            response.cookie("token", token, 55555, true);
 
-            return success(response);
+            JsonObject object = new JsonObject();
+            object.addProperty("success", true);
+            object.addProperty("token", token);
+
+            return json(object, response);
         }
 
         throw new APIError(APIError.INVALID_CREDENTIALS, "Invalid email or password");
@@ -67,7 +70,6 @@ public class AuthController extends Controller
         requireLogged(request);
 
         tokens.remove(request.ip());
-        response.removeCookie("token");
 
         return success(response);
     }
@@ -83,7 +85,7 @@ public class AuthController extends Controller
             token = null;
         }
 
-        if (token == null || request.cookie("token") == null || !request.cookie("token").equals(token.getToken()))
+        if (token == null || request.headers("Token") == null || !request.headers("Token").equals(token.getToken()))
         {
             throw new APIError(APIError.UNAUTHORIZED, "You can't do that without being logged");
         }
