@@ -25,6 +25,8 @@
             <li *ngIf="!route.hasOwnProperty('auth') || (auth.logged ? route.auth : !route.auth)"
                 [routerLink]="route.hasOwnProperty('path') ? route.path : ''"
 
+                (click)="route.logout ? logout() : ''"
+
                 class="clickable ripple" [class.right]="route.hasOwnProperty('right') && route.right"
                 md-ripple md-tooltip="{{ route.name }}" md-tooltip-position="below">
 

@@ -18,7 +18,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { API_URL } from '../environments/environment';
 import { Observable } from 'rxjs/Observable';
 
@@ -37,11 +37,21 @@ export class AuthService
             email: email,
             password: password,
             remember: remember
-        }}).map(res => {
-            return this.logged = (res.json().success || false);
-        }).catch(error => {
-            console.error(error);
-            return Observable.throw(error);
-        });
+        }}).map(res => this.logged = (this.extract(res).success || false))
+            .catch(error => Observable.throw(error));
+    }
+
+    logout(): Observable<boolean>
+    {
+        return this.http.post(`${API_URL}/auth/logout`, '', {
+            withCredentials: true
+        }).map(res => !(this.logged = !(this.extract(res).success || false)))
+            .catch(error => Observable.throw(error));
+    }
+
+    extract(res: Response): any
+    {
+        console.log(`Result : ${res.text()}`);
+        return res.json();
     }
 }

@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import spark.Filter;
 import spark.Request;
 import spark.Spark;
 
@@ -39,6 +40,8 @@ public class LightslarkServer implements App
     @Inject
     private MainController main;
 
+    private boolean debug = false;
+
     @Override
     public void start()
     {
@@ -61,10 +64,18 @@ public class LightslarkServer implements App
         Spark.port(configs.at("app.port", int.class));
         Spark.notFound(main::home);
 
-        if (System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+        Filter corsFilter = (request, response) ->
         {
-            LOGGER.warn("!! DEBUG MODE ENABLED ! DISABLING CSRF PROTECTION !");
-            Spark.after((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+            response.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
+            response.header("Access-Control-Allow-Credentials", "true");
+        };
+
+        if (this.debug = System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+        {
+            LOGGER.warn("!! DEBUG MODE ENABLED ! DISABLING CSRF PROTECTION FOR http://127.0.0.1:4200 !");
+
+
+            Spark.after(corsFilter);
         }
 
         Spark.exception(Exception.class, (e, request, response) ->
@@ -91,9 +102,15 @@ public class LightslarkServer implements App
             {
                 exceptionHandler.handle(new InRequestException(e, request));
             }
-            else if (System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+            else if (this.debug)
             {
-                response.header("Access-Control-Allow-Origin", "*");
+                try
+                {
+                    corsFilter.handle(request, response);
+                }
+                catch (Exception ignored)
+                {
+                }
             }
         });
 

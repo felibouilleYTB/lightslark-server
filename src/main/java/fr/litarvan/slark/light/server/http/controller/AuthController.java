@@ -76,7 +76,7 @@ public class AuthController extends Controller
         String ip = request.ip();
         AuthToken token = tokens.get(ip);
 
-        if (token.getValidUntil() >= System.currentTimeMillis())
+        if (token != null && token.getValidUntil() >= System.currentTimeMillis())
         {
             tokens.remove(ip);
             token = null;
