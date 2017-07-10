@@ -17,7 +17,7 @@
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,12 @@ import { AppComponent } from '../components/app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdRippleModule, MdTooltipModule } from '@angular/material';
+import { AuthService } from '../auth.service';
+
+export function authServiceFactory(auth: AuthService): Function
+{
+    return () => auth.refresh();
+}
 
 @NgModule({
     declarations: [
@@ -41,7 +47,14 @@ import { MdRippleModule, MdTooltipModule } from '@angular/material';
         MdTooltipModule,
         MdRippleModule
     ],
-    providers: [],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: authServiceFactory,
+            deps: [AuthService],
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule

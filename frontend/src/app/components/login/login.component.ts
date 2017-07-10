@@ -58,6 +58,12 @@ export class LoginComponent implements OnInit, AfterViewInit
 
     ngOnInit()
     {
+        if (this.auth.logged)
+        {
+            this.router.navigateByUrl('/');
+            return;
+        }
+
         this.title.setTitle('Lightslark Server - Connexion');
 
         this.loginForm.get('email').setValue(localStorage.getItem('email') || '');

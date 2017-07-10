@@ -79,9 +79,7 @@ export class WhitelistComponent implements OnInit
 
         document.addEventListener('keyup', ev =>
         {
-            console.log(ev.key);
-
-            if (ev.key == 'Enter')
+            if (ev.key == 'Enter' || ev.key == 'Escape')
             {
                 this.editing = null;
             }

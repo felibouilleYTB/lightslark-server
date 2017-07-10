@@ -20,6 +20,7 @@ public final class Routes
         path("/api", () -> {
             path("/auth", () -> {
                 post("/login", auth::login);
+                post("/validate", auth::validate);
                 post("/logout", auth::logout);
             });
         });

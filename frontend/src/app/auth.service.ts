@@ -24,6 +24,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService
@@ -41,14 +42,36 @@ export class AuthService
                 email: email,
                 password: password,
                 remember: remember
-            },
-            withCredentials: true
+            }
         }).map(res => {
             const json = this.extract(res);
             this.token = (json.token || null);
 
+            localStorage.setItem('slark.token', this.token);
+
             return json.success || false;
         }).catch(error => Observable.throw(error));
+    }
+
+    refresh(): Promise<any>
+    {
+        const token = localStorage.getItem('slark.token');
+
+        return this.http.post(`${API_URL}/auth/validate`, '', {
+            headers: new Headers({
+                token: token
+            })
+        }).map(res => {
+            const json = this.extract(res);
+            const success = json.success || false;
+
+            if (success)
+            {
+                this.token = token;
+            }
+
+            return success;
+        }).toPromise().catch(error => Promise.resolve());
     }
 
     logout(): Observable<boolean>
@@ -62,6 +85,8 @@ export class AuthService
             const success = json.success || false;
 
             this.token = success ? null : this.token;
+
+            localStorage.setItem('slark.token', null);
 
             return success;
         }).catch(error => Observable.throw(error));

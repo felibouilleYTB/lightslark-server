@@ -68,7 +68,6 @@ public class LightslarkServer implements App
         Filter corsFilter = (request, response) ->
         {
             response.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
-            response.header("Access-Control-Allow-Credentials", "true");
 
             if (request.requestMethod().toLowerCase().equals("options"))
             {

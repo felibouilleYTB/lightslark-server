@@ -25,7 +25,6 @@ public class AuthController extends Controller
     public static final long LOGIN_MINIMUM_PERIOD = 1500L;
     public static final int MAX_PASSWORD_LENGTH = 500;
 
-    private static ConcurrentHashMap<String, AuthToken> tokens = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, Long> loginHistory = new ConcurrentHashMap<>();
 
     @Inject
@@ -65,6 +64,11 @@ public class AuthController extends Controller
         throw new APIError(APIError.INVALID_CREDENTIALS, "Invalid email or password");
     }
 
+    public String validate(Request request, Response response) throws APIError
+    {
+        return result(response, isLogged(request));
+    }
+
     public String logout(Request request, Response response) throws APIError
     {
         requireLogged(request);
@@ -72,22 +76,5 @@ public class AuthController extends Controller
         tokens.remove(request.ip());
 
         return success(response);
-    }
-
-    public static void requireLogged(Request request) throws APIError
-    {
-        String ip = request.ip();
-        AuthToken token = tokens.get(ip);
-
-        if (token != null && System.currentTimeMillis() >= token.getValidUntil())
-        {
-            tokens.remove(ip);
-            token = null;
-        }
-
-        if (token == null || request.headers("Token") == null || !request.headers("Token").equals(token.getToken()))
-        {
-            throw new APIError(APIError.UNAUTHORIZED, "You can't do that without being logged");
-        }
     }
 }
