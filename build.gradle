@@ -64,6 +64,14 @@ dependencies {
     compile sourceSets.generated.output
 }
 
+distZip {
+    into(project.name) {
+        from '.'
+        include 'LICENSE'
+        include 'LICENSE.LESSER'
+    }
+}
+
 task dist {}
 dist.dependsOn jar
 dist.dependsOn yarn_prod
@@ -72,8 +80,7 @@ tasks.distZip.dependsOn dist
 tasks.processGeneratedResources.mustRunAfter yarn_prod
 
 run {
-    if (project.getProperties().get('debug') == 'true')
-    {
+    if (project.getProperties().get('debug') == 'true') {
         args = ['--debug']
     }
 }
