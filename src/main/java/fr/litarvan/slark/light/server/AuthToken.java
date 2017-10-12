@@ -16,31 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.litarvan.slark.light.server.http;
+package fr.litarvan.slark.light.server;
 
-import fr.litarvan.slark.light.server.http.controller.AuthController;
-import fr.litarvan.slark.light.server.http.controller.MainController;
-import javax.inject.Inject;
-
-import static spark.Spark.*;
-
-public final class Routes
+public class AuthToken
 {
-    @Inject
-    private AuthController auth;
+    private String token;
+    private long validUntil;
 
-    @Inject
-    private MainController main;
-
-    public void load()
+    public AuthToken(String token, long validUntil)
     {
-        get("/", main::home);
-        path("/api", () -> {
-            path("/auth", () -> {
-                post("/login", auth::login);
-                post("/validate", auth::validate);
-                post("/logout", auth::logout);
-            });
-        });
+        this.token = token;
+        this.validUntil = validUntil;
+    }
+
+    public String getToken()
+    {
+        return token;
+    }
+
+    public long getValidUntil()
+    {
+        return validUntil;
     }
 }

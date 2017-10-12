@@ -1,3 +1,21 @@
+/*
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ *
+ * This file is part of Lightslark.
+
+ * Lightslark is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Lightslark is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package fr.litarvan.slark.light.server;
 
 import com.google.gson.Gson;
@@ -7,6 +25,7 @@ import fr.litarvan.commons.config.ConfigProvider;
 import fr.litarvan.commons.crash.ExceptionHandler;
 import fr.litarvan.commons.crash.ReportField;
 import fr.litarvan.commons.io.IOSource;
+import fr.litarvan.slark.light.server.http.Controller;
 import fr.litarvan.slark.light.server.http.Routes;
 import fr.litarvan.slark.light.server.http.controller.MainController;
 import java.io.File;
@@ -15,6 +34,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import spark.Filter;
 import spark.Request;
 import spark.Spark;
 
@@ -39,6 +59,8 @@ public class LightslarkServer implements App
     @Inject
     private MainController main;
 
+    private boolean debug = false;
+
     @Override
     public void start()
     {
@@ -61,10 +83,25 @@ public class LightslarkServer implements App
         Spark.port(configs.at("app.port", int.class));
         Spark.notFound(main::home);
 
-        if (System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+        Filter corsFilter = (request, response) ->
         {
-            LOGGER.warn("!! DEBUG MODE ENABLED ! DISABLING CSRF PROTECTION !");
-            Spark.after((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
+            response.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
+
+            if (request.requestMethod().toLowerCase().equals("options"))
+            {
+                response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+                response.header("Access-Control-Allow-Headers", "origin, x-csrftoken, content-type, token, accept");
+
+                response.body(Controller.SUCCESS);
+            }
+        };
+
+        if (this.debug = System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
+        {
+            LOGGER.warn("!! DEBUG MODE ENABLED ! DISABLING CSRF PROTECTION FOR http://127.0.0.1:4200 !");
+
+
+            Spark.after(corsFilter);
         }
 
         Spark.exception(Exception.class, (e, request, response) ->
@@ -72,7 +109,7 @@ public class LightslarkServer implements App
             response.type("application/json; charset=utf-8");
 
             JsonObject rep = new JsonObject();
-            rep.addProperty("success", "false");
+            rep.addProperty("success", false);
 
             if (e instanceof APIError)
             {
@@ -90,6 +127,16 @@ public class LightslarkServer implements App
             if (!(e instanceof APIError))
             {
                 exceptionHandler.handle(new InRequestException(e, request));
+            }
+            else if (this.debug)
+            {
+                try
+                {
+                    corsFilter.handle(request, response);
+                }
+                catch (Exception ignored)
+                {
+                }
             }
         });
 

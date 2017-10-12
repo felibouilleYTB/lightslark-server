@@ -1,23 +1,23 @@
 /*
  * Copyright 2014-2017 Adrien 'Litarvan' Navratil
  *
- * This file is part of Slark.
+ * This file is part of Lightslark.
 
- * Slark is free software: you can redistribute it and/or modify
+ * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Slark is distributed in the hope that it will be useful,
+ * Lightslark is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Slark.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#container {
+/*#container {
     padding: 25px;
     text-align: center;
 }
@@ -51,8 +51,90 @@
 }
 
 .btn-floating {
-    background-color: #00c6e5;
+    /* background-color: #12aef5;
     position: absolute;
     bottom: 17.5px;
     right: 15px;
+}*/
+
+md-card {
+    color: black;
+    margin: 100px;
+}
+
+.whitelist-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    min-width: 300px;
+    font-family: "Roboto", "Arial", sans-serif;
+}
+
+.whitelist-header {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    pading-left: 10px;
+    font-size: 20px;
+    background-color: white;
+}
+
+.mat-input-container {
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.mat-table {
+    overflow: auto;
+}
+
+.type-icon {
+    padding-right: 5px;
+}
+
+.action-button {
+    position: relative;
+    outline: none;
+    border: none;
+
+    background-color: #f4f4f4;
+    transition: background-color 125ms ease-in-out;
+
+    text-align: center;
+
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+}
+
+.action-button:hover {
+    cursor: pointer;
+    background-color: #ededed;
+}
+
+.action-button i {
+    font-size: 16px;
+}
+
+.file-tag {
+    height: 25px;
+    padding: 5px;
+
+    border-radius: 3px;
+
+    transition: background-color 125ms ease-in-out;
+}
+
+.file-tag:hover {
+    background-color: #f0f0f0;
+    cursor: text;
+}
+
+md-input-container {
+    width: calc(100% - 40px);
+}
+
+.hidden {
+    display: none;
 }

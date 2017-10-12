@@ -16,31 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.litarvan.slark.light.server.http;
 
-import fr.litarvan.slark.light.server.http.controller.AuthController;
-import fr.litarvan.slark.light.server.http.controller.MainController;
-import javax.inject.Inject;
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
-import static spark.Spark.*;
-
-public final class Routes
+@Component({
+    selector: 'slark-about',
+    templateUrl: './about.component.html',
+    styleUrls: ['./about.component.css']
+})
+export class AboutComponent implements OnInit
 {
-    @Inject
-    private AuthController auth;
-
-    @Inject
-    private MainController main;
-
-    public void load()
+    constructor(private title: Title)
     {
-        get("/", main::home);
-        path("/api", () -> {
-            path("/auth", () -> {
-                post("/login", auth::login);
-                post("/validate", auth::validate);
-                post("/logout", auth::logout);
-            });
-        });
+    }
+
+    ngOnInit()
+    {
+        this.title.setTitle('Lightslark Server - À propos');
     }
 }

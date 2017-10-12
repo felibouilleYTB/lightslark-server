@@ -16,31 +16,23 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.litarvan.slark.light.server.http;
 
-import fr.litarvan.slark.light.server.http.controller.AuthController;
-import fr.litarvan.slark.light.server.http.controller.MainController;
-import javax.inject.Inject;
+@import '~@angular/material/theming';
 
-import static spark.Spark.*;
+@include mat-core();
 
-public final class Routes
-{
-    @Inject
-    private AuthController auth;
+$slark-primary: mat-palette($mat-blue, 500, 600, 700);
+$slark-accent:  mat-palette($mat-light-blue, 600, A700, 800);
+$slark-warn:    mat-palette($mat-red);
 
-    @Inject
-    private MainController main;
+$slark-theme: mat-light-theme($slark-primary, $slark-accent, $slark-warn);
 
-    public void load()
-    {
-        get("/", main::home);
-        path("/api", () -> {
-            path("/auth", () -> {
-                post("/login", auth::login);
-                post("/validate", auth::validate);
-                post("/logout", auth::logout);
-            });
-        });
-    }
+@include angular-material-theme($slark-theme);
+
+.mat-ripple-element {
+  background-color: rgba(white, $mat-ripple-color-opacity);
+}
+
+.dark-ripple .mat-ripple-element {
+  background-color: rgba(black, $mat-ripple-color-opacity);
 }

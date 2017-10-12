@@ -1,15 +1,60 @@
+<!--
+    Copyright 2014-2017 Adrien 'Litarvan' Navratil
+
+    This file is part of Lightslark.
+
+    Lightslark is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Lightslark is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
 <div id="left-block">
     <img id="logo" src="assets/images/logo-full.png" />
 
-    <h3>Bienvenue sur Slark !</h3>
+    <h3>Bienvenue sur Lightslark !</h3>
 
     <p>
         Ici se trouve le serveur de mise à jour de <b>{{ server }}</b>. <br/><br/>
-        Cet espace est reservé aux administrateurs de {{ server }}, merci donc de vous connecter en utilisant le formulaire ci dessous.<br/><br />
+        Ce serveur hébèrge les fichiers de {{ server }} et gère tout ce qui est en relation avec la mise à jour du programme.
+        Cet espace est reservé aux administrateurs de {{ server }}, merci donc de vous connecter avec vos identifiants en utilisant le formulaire ci dessous.<br/><br />
         {{ server }} utilise <a href="https://github.com/slark-update/lightslark">Lightslark</a>, un système de mise à jour libre, simple, et léger.
     </p>
 </div>
 
 <div id="right-block">
-    <input type="text">
+    <md-card id="login-block">
+        <h3>Connexion</h3>
+
+        <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+            <md-input-container>
+                <input mdInput #email id="email" type="email" placeholder="E-Mail" [readOnly]="logging" formControlName="email">
+                <md-error *ngIf="loginForm.get('email').hasError('pattern')">
+                    Veuillez entrer une addresse email valide
+                </md-error>
+                <md-error *ngIf="loginForm.get('email').hasError('required')">
+                    Ce champ est <strong>obligatoire</strong>
+                </md-error>
+            </md-input-container>
+            <md-input-container>
+                <input mdInput #password id="password" type="password" placeholder="Mot de passe" [readOnly]="logging" formControlName="password">
+                <md-error *ngIf="loginForm.get('password').hasError('required')">
+                    Ce champ est <strong>obligatoire</strong>
+                </md-error>
+            </md-input-container>
+
+            <md-checkbox [disabled]="logging" formControlName="remember">Se souvenir de moi</md-checkbox>
+
+            <button type="submit" *ngIf="!logging" md-raised-button [disabled]="loginForm.invalid">Se connecter</button>
+            <md-progress-spinner id="logging" *ngIf="logging" mode="indeterminate"></md-progress-spinner>
+        </form>
+    </md-card>
 </div>
