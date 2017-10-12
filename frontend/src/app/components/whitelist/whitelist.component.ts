@@ -112,6 +112,11 @@ export class WhitelistComponent implements OnInit
             document.getElementById(`edit-${id}`).focus();
         }, 50);
     }
+
+    remove(entry: WhitelistEntry)
+    {
+        alert("Suppression de " + entry.name)
+    }
 }
 
 export interface WhitelistEntry

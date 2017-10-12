@@ -46,7 +46,7 @@
             <ng-container cdkColumnDef="action">
                 <md-header-cell *cdkHeaderCellDef> Action </md-header-cell>
                 <md-cell *cdkCellDef="let row">
-                    <button md-tooltip="Supprimer" md-tooltip-position="below" class="action-button dark-ripple" md-ripple><i class="fa fa-trash"></i></button>
+                    <button md-tooltip="Supprimer" md-tooltip-position="below" class="action-button dark-ripple" (click)="remove(row)" md-ripple><i class="fa fa-trash"></i></button>
                 </md-cell>
             </ng-container>
 
