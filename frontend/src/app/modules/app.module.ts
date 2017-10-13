@@ -25,7 +25,7 @@ import { AppComponent } from '../components/app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdRippleModule, MdTooltipModule } from '@angular/material';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 
 export function authServiceFactory(auth: AuthService): Function
 {

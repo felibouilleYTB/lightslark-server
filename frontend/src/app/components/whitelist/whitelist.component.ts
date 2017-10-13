@@ -30,6 +30,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { isNullOrUndefined } from 'util';
+import { MdSnackBar } from '@angular/material';
 
 @Component({
     selector: 'slark-whitelist',
@@ -46,7 +47,7 @@ export class WhitelistComponent implements OnInit
     @ViewChild('filter')
     filter: ElementRef;
 
-    constructor(private title: Title)
+    constructor(private title: Title, private snack: MdSnackBar)
     {
     }
 
@@ -115,7 +116,9 @@ export class WhitelistComponent implements OnInit
 
     remove(entry: WhitelistEntry)
     {
-        alert("Suppression de " + entry.name)
+        this.snack.open(`'${entry.name}' supprimé`, 'OK', {
+            duration: 3000
+        });
     }
 }
 

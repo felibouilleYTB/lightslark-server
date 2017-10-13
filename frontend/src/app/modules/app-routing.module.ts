@@ -27,8 +27,8 @@ import {
 } from '@angular/material';
 import { WhitelistComponent } from '../components/whitelist/whitelist.component';
 import { LoginComponent } from '../components/login/login.component';
-import { AuthService } from '../auth.service';
-import { ConfigService } from '../config.service';
+import { AuthService } from '../services/auth.service';
+import { ConfigService } from '../services/config.service';
 import { AboutComponent } from '../components/about/about.component';
 import {HttpModule, JsonpModule} from "@angular/http";
 import { CdkTableModule } from '@angular/cdk';

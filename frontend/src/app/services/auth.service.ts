@@ -19,7 +19,7 @@
 
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
-import { API_URL } from '../environments/environment';
+import { API_URL } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/catch';

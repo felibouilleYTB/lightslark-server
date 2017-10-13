@@ -19,8 +19,8 @@
 
 import { AfterViewInit, Component, OnInit, ViewChildren } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { AuthService } from '../../auth.service';
-import { ConfigService } from '../../config.service';
+import { AuthService } from '../../services/auth.service';
+import { ConfigService } from '../../services/config.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
