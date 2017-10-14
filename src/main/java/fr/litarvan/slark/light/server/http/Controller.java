@@ -1,8 +1,8 @@
 /*
- * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
  *
- * This file is part of Lightslark.
-
+ * This file is part of Lightslark
+ *
  * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,6 +20,7 @@ package fr.litarvan.slark.light.server.http;
 
 import com.google.gson.Gson;
 import fr.litarvan.slark.light.server.APIError;
+import fr.litarvan.slark.light.server.service.AuthService;
 import javax.inject.Inject;
 
 import fr.litarvan.slark.light.server.AuthToken;
@@ -33,10 +34,11 @@ public class Controller
     public static final String SUCCESS = "{\n    \"success\": true\n}";
     public static final String FAILURE = "{\n    \"success\": false\n}";
 
-    protected static ConcurrentHashMap<String, AuthToken> tokens = new ConcurrentHashMap<>();
+    @Inject
+    private Gson gson;
 
     @Inject
-    protected Gson gson;
+    private AuthService auth;
 
     protected String json(Object data, Response response)
     {
@@ -72,16 +74,10 @@ public class Controller
 
     protected boolean isLogged(Request request)
     {
-        String ip = request.ip();
-        AuthToken token = tokens.get(ip);
+        String token = auth.getToken(request.ip());
+        String given = request.headers("Token");
 
-        if (token != null && System.currentTimeMillis() >= token.getValidUntil())
-        {
-            tokens.remove(ip);
-            token = null;
-        }
-
-        return token != null && request.headers("Token") != null && request.headers("Token").equals(token.getToken());
+        return token != null && given != null && given.equals(token);
     }
 
     public String success(Response response)

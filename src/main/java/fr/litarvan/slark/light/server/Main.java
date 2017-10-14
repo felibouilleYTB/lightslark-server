@@ -1,8 +1,8 @@
 /*
- * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
  *
- * This file is part of Lightslark.
-
+ * This file is part of Lightslark
+ *
  * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -41,7 +41,7 @@ public class Main
         injector = Guice.createInjector(new LightslarkServerModule());
         App app = injector.getInstance(App.class);
 
-        LOGGER.info("Done.");
+        LOGGER.info("Starting");
         System.out.println();
 
         app.start();

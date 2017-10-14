@@ -1,8 +1,8 @@
 /*
- * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
  *
- * This file is part of Lightslark.
-
+ * This file is part of Lightslark
+ *
  * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +23,12 @@ import spark.Response;
 
 public class APIError extends Exception
 {
+    // Auth
     public static final String INVALID_CREDENTIALS = "Invalid credentials";
+    public static final String BRUTE_FORCE_PROTECTION = "Brute-force protection";
+    public static final String DOS_PROTECTION = "DoS protection";
+
+    // HTTP
     public static final String UNAUTHORIZED = "Unauthorized";
     public static final String MISSING_PARAMETER = "Missing parameter";
 

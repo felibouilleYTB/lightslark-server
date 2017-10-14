@@ -2,7 +2,7 @@
  * Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
  *
  * This file is part of Lightslark.
-
+ *
  * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,59 +18,29 @@
  */
 package fr.litarvan.slark.light.server.http.controller;
 
-import com.google.common.hash.Hashing;
 import com.google.gson.JsonObject;
-import fr.litarvan.commons.config.ConfigProvider;
 import fr.litarvan.slark.light.server.APIError;
-import fr.litarvan.slark.light.server.AuthToken;
 import fr.litarvan.slark.light.server.http.Controller;
-import java.nio.charset.Charset;
+import fr.litarvan.slark.light.server.service.AuthService;
+import fr.litarvan.slark.light.server.service.AuthService.AuthException;
 import javax.inject.Inject;
-import org.apache.commons.lang3.RandomStringUtils;
 import spark.Request;
 import spark.Response;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
 
-/**
- * Documentation note on DoS attacks:
- * The controller blocks abusing clients when providing more than one credential pair each one and an half seconds
- * in order to avoid request flooding that would result in mass sha512 hashing.
- * It also makes sure password are short enough to limit hashs processing time.
-**/
 public class AuthController extends Controller
 {
-    public static final long LOGIN_MINIMUM_PERIOD = 1500L;
-    public static final int MAX_PASSWORD_LENGTH = 500;
-
-    private ConcurrentHashMap<String, Long> loginHistory = new ConcurrentHashMap<>();
-
     @Inject
-    private ConfigProvider config;
+    private AuthService auth;
 
     public String login(Request request, Response response) throws APIError
     {
-        String ip = request.ip();
-
-        long time = System.currentTimeMillis();
-
-        if (loginHistory.containsKey(ip) && time - loginHistory.get(ip) <= LOGIN_MINIMUM_PERIOD)
-            throw new APIError("Denial of services protection", "You must wait " + ((double) LOGIN_MINIMUM_PERIOD / 1000D) + " seconds since your last try before issuing new credentials.");
-
-        loginHistory.remove(ip);
-        loginHistory.put(ip, time);
-
         String email = require(request, "email");
         String password = require(request, "password");
         boolean remember = Boolean.parseBoolean(require(request, "remember"));
 
-        if (password.length() > MAX_PASSWORD_LENGTH) throw new APIError("Denial of services protection", "Passwords longer than " + MAX_PASSWORD_LENGTH + " are not allowed");
-
-        if (email.equalsIgnoreCase(config.at("auth.email")) && Hashing.sha512().hashString(password, Charset.defaultCharset()).toString().equals(config.at("auth.password")))
+        try
         {
-            String token = RandomStringUtils.randomAlphanumeric(512);
-
-            tokens.put(ip, new AuthToken(token, System.currentTimeMillis() + TimeUnit.DAYS.toMillis(remember ? 30 : 1)));
+            String token = auth.authenticate(request.ip(), email, password, remember);
 
             JsonObject object = new JsonObject();
             object.addProperty("success", true);
@@ -78,8 +48,20 @@ public class AuthController extends Controller
 
             return json(object, response);
         }
-
-        throw new APIError(APIError.INVALID_CREDENTIALS, "Invalid email or password");
+        catch (AuthException e)
+        {
+            switch (e.getType())
+            {
+                case INVALID_CREDENTIALS:
+                    throw new APIError(APIError.INVALID_CREDENTIALS, "Invalid email or password");
+                case DOS_PROTECTION:
+                    throw new APIError(APIError.DOS_PROTECTION, "Denial of service protection");
+                case BRUTE_FORCE_PROTECTION:
+                    throw new APIError(APIError.BRUTE_FORCE_PROTECTION, "Brute force protection");
+                default:
+                    return null;
+            }
+        }
     }
 
     public String validate(Request request, Response response) throws APIError
@@ -90,8 +72,7 @@ public class AuthController extends Controller
     public String logout(Request request, Response response) throws APIError
     {
         requireLogged(request);
-
-        tokens.remove(request.ip());
+        auth.logout(request.ip());
 
         return success(response);
     }

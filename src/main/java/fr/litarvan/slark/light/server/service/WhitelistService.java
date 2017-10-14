@@ -1,8 +1,8 @@
 /*
- * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
  *
- * This file is part of Lightslark.
-
+ * This file is part of Lightslark
+ *
  * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.litarvan.slark.light.server.auth;
+package fr.litarvan.slark.light.server.service;
 
 import javax.inject.Singleton;
 
 @Singleton
-public class AuthManager
+public class WhitelistService
 {
 }

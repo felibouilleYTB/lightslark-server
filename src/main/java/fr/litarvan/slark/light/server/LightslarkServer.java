@@ -1,8 +1,8 @@
 /*
- * Copyright 2014-2017 Adrien 'Litarvan' Navratil
+ * Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
  *
- * This file is part of Lightslark.
-
+ * This file is part of Lightslark
+ *
  * Lightslark is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -23,7 +23,6 @@ import com.google.gson.JsonObject;
 import fr.litarvan.commons.App;
 import fr.litarvan.commons.config.ConfigProvider;
 import fr.litarvan.commons.crash.ExceptionHandler;
-import fr.litarvan.commons.crash.ReportField;
 import fr.litarvan.commons.io.IOSource;
 import fr.litarvan.slark.light.server.http.Controller;
 import fr.litarvan.slark.light.server.http.Routes;
@@ -66,6 +65,7 @@ public class LightslarkServer implements App
     {
         LOGGER.info("Starting Lightslark Server v{}", VERSION);
 
+        // This adds HTTP-related info to the crash reports
         exceptionHandler.addField(new HTTPReportField("URL", Request::url));
         exceptionHandler.addField(new HTTPReportField("Scheme", Request::scheme));
         exceptionHandler.addField(new HTTPReportField("Route", (request) -> request.requestMethod() + " " + request.pathInfo()));
@@ -99,8 +99,6 @@ public class LightslarkServer implements App
         if (this.debug = System.getProperty("slark.debug", "false").equalsIgnoreCase("true"))
         {
             LOGGER.warn("!! DEBUG MODE ENABLED ! DISABLING CSRF PROTECTION FOR http://127.0.0.1:4200 !");
-
-
             Spark.after(corsFilter);
         }
 
