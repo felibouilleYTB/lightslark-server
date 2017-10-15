@@ -4,7 +4,7 @@
   "license": "LGPL-3.0",
   "scripts": {
     "ng": "ng",
-    "serve": "ng serve --target=development --sourcemaps --progress --poll=2000",
+    "serve": "ng serve --preserve-symlink --target=development --sourcemaps --progress --poll=2000",
     "build": "ng build --preserve-symlink --target=development --outputPath=../gen/web/assets/web --sourcemaps --progress",
     "prod": "ng build --preserve-symlink --target=production --aot --outputPath=../gen/web/assets/web --vendorChunk --baseHref \"/\" --verbose --progress",
     "lint": "ng lint"
