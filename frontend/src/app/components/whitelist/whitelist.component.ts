@@ -17,10 +17,9 @@
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { DataSource } from '@angular/cdk';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/startWith';
@@ -30,7 +29,10 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { isNullOrUndefined } from 'util';
-import { MdSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar } from '@angular/material';
+import { createEntry, WhitelistEntry, WhitelistService } from '../../services/whitelist.service';
+import { HandleService } from '../../services/handle.service';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({
     selector: 'slark-whitelist',
@@ -40,14 +42,15 @@ import { MdSnackBar } from '@angular/material';
 export class WhitelistComponent implements OnInit
 {
     displayedColumns = ['name', 'type', 'action'];
-    database = new WhitelistDatabase();
+    database = new WhitelistDatabase(this.whitelist, this.handler);
     data: WhitelistDataSource | null;
-    editing: string;
+
+    private _editing: string;
 
     @ViewChild('filter')
     filter: ElementRef;
 
-    constructor(private title: Title, private snack: MdSnackBar)
+    constructor(private title: Title, private dialog: MatDialog, private whitelist: WhitelistService, private handler: HandleService)
     {
     }
 
@@ -101,6 +104,26 @@ export class WhitelistComponent implements OnInit
         });
     }
 
+    add()
+    {
+        this.dialog.open(WhitelistAddDialogComponent, {
+            width: '250px',
+            data: {
+                name: ''
+            }
+        }).afterClosed().subscribe(result => {
+            if (isNullOrUndefined(result) || result.trim() == "")
+            {
+                return;
+            }
+
+            this.handler.handle(this.whitelist.add(result),'Entrée ajoutée');
+
+            this.database.data.push(createEntry(this.database.data.length.toString(), result));
+            this.database.update();
+        });
+    }
+
     edit(id: string)
     {
         setTimeout(_ =>
@@ -116,37 +139,56 @@ export class WhitelistComponent implements OnInit
 
     remove(entry: WhitelistEntry)
     {
-        this.snack.open(`'${entry.name}' supprimé`, 'OK', {
-            duration: 3000
-        });
-    }
-}
+        this.handler.handle(this.whitelist.remove(entry), `${entry.name} supprimé`);
 
-export interface WhitelistEntry
-{
-    id: string;
-    name: string;
-    type: string;
+        this.database.data.splice(this.database.data.indexOf(entry), 1)
+        this.database.update()
+    }
+
+    get editing(): string
+    {
+        return this._editing;
+    }
+
+    set editing(value: string)
+    {
+        if (value == null && this.editing != null)
+        {
+            const oldEntry = this.database.data[this.editing];
+            const newVal = (<HTMLInputElement> document.getElementById(`edit-${this.editing}`)).value;
+
+            if (oldEntry.name != newVal)
+            {
+                this.handler.handle(this.whitelist.update(oldEntry, newVal), "Entrée éditée");
+
+                this.database.data[this.editing] = createEntry(oldEntry.id, newVal);
+                this.database.update()
+            }
+        }
+
+        this._editing = value;
+    }
 }
 
 export class WhitelistDatabase
 {
     dataChange: BehaviorSubject<WhitelistEntry[]> = new BehaviorSubject<WhitelistEntry[]>([]);
 
-    constructor()
+    constructor(private whitelist: WhitelistService, private handler: HandleService)
     {
-        const names = ["trucs.json", "username.txt", "launcher/launcher.properties", "config/", "*.log"];
-        const types = ["file", "file", "file", "folder", "glob"];
+        this.whitelist.get().toPromise().then(val => {
+            this.dataChange.next(val);
+        }).catch(err => this.handler.handleError('Impossible de charger la whitelist', err));
+    }
 
-        for (let i = 0; i < 5; i++) {
-            const copiedData = this.data.slice();
-            copiedData.push({
-                id: (this.data.length + 1).toString(),
-                name: names[i],
-                type: types[i]
-            });
-            this.dataChange.next(copiedData);
-        }
+    set data(val: WhitelistEntry[])
+    {
+        this.dataChange.next(val);
+    }
+
+    update()
+    {
+        this.dataChange.next(this.data)
     }
 
     get data(): WhitelistEntry[]
@@ -193,5 +235,26 @@ export class WhitelistDataSource extends DataSource<any>
 
     disconnect()
     {
+    }
+}
+
+@Component({
+    selector: 'slark-whitelist-add-dialog',
+    templateUrl: 'whitelist-add-dialog.component.html',
+})
+export class WhitelistAddDialogComponent
+{
+    constructor(public dialogRef: MatDialogRef<WhitelistAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any)
+    {
+    }
+
+    trigger(): void
+    {
+        this.dialogRef.close(this.data.name)
+    }
+
+    onNoClick(): void
+    {
+        this.dialogRef.close();
     }
 }

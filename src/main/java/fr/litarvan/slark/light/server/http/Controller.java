@@ -19,15 +19,12 @@
 package fr.litarvan.slark.light.server.http;
 
 import com.google.gson.Gson;
-import fr.litarvan.slark.light.server.APIError;
+import fr.litarvan.slark.light.server.http.error.APIError;
 import fr.litarvan.slark.light.server.service.AuthService;
 import javax.inject.Inject;
 
-import fr.litarvan.slark.light.server.AuthToken;
 import spark.Request;
 import spark.Response;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 public class Controller
 {

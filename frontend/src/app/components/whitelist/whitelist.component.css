@@ -57,7 +57,7 @@
     right: 15px;
 }*/
 
-md-card {
+mat-card {
     color: black;
     margin: 100px;
 }
@@ -131,7 +131,7 @@ md-card {
     cursor: text;
 }
 
-md-input-container {
+mat-input-container {
     width: calc(100% - 40px);
 }
 
@@ -141,4 +141,11 @@ md-input-container {
 
 .action-button .fa:before {
     color: rgba(0, 0, 0, 0.87); /* Fix a bug that occurs sometimes  */
+}
+
+#add {
+    font-size: 18px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
 }

@@ -44,7 +44,7 @@ export class AuthService
                 remember: remember
             }
         }).map(res => {
-            const json = this.extract(res);
+            const json = res.json();
             this.token = (json.token || null);
 
             localStorage.setItem('slark.token', this.token);
@@ -62,7 +62,7 @@ export class AuthService
                 token: token
             })
         }).map(res => {
-            const json = this.extract(res);
+            const json = res.json();
             const success = json.success || false;
 
             if (success)
@@ -81,7 +81,7 @@ export class AuthService
                 'Token': this.token
             })
         }).map(res => {
-            const json = this.extract(res);
+            const json = res.json();
             const success = json.success || false;
 
             this.token = success ? null : this.token;
@@ -95,11 +95,5 @@ export class AuthService
     get logged(): boolean
     {
         return this.token != null;
-    }
-
-    extract(res: Response): any
-    {
-        console.log(`Result : ${res.text()}`);
-        return res.json();
     }
 }

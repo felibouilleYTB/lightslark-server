@@ -29,7 +29,7 @@ import spark.Response;
 
 public class MainController extends Controller
 {
-    public String home(Request request, Response response) throws IOException
+    public String web(Request request, Response response) throws IOException
     {
         InputStream in = IOSource.at("assets/web/index.html").provideInput();
 

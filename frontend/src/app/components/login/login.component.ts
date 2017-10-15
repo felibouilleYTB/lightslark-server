@@ -22,7 +22,7 @@ import { Title } from '@angular/platform-browser';
 import { AuthService } from '../../services/auth.service';
 import { ConfigService } from '../../services/config.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 
 @Component({
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, AfterViewInit
         remember: new FormControl()
     });
 
-    constructor(private title: Title, private auth: AuthService, private config: ConfigService, private snack: MdSnackBar, private router: Router)
+    constructor(private title: Title, private auth: AuthService, private config: ConfigService, private snack: MatSnackBar, private router: Router)
     {
         this.server = config.server;
     }

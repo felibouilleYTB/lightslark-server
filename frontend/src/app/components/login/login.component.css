@@ -79,12 +79,12 @@ h3 {
     -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
-#login-block md-input-container {
+#login-block mat-input-container {
     width: 92.5%;
     margin-bottom: 10px;
 }
 
-#login-block md-checkbox {
+#login-block mat-checkbox {
     margin-top: 10px;
     margin-bottom: 20px;
     margin-left: 3.25%;

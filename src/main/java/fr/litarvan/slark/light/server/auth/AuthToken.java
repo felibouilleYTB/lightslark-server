@@ -16,22 +16,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.litarvan.slark.light.server;
+package fr.litarvan.slark.light.server.auth;
 
-import spark.Request;
-
-public class InRequestException extends Exception
+public class AuthToken
 {
-    private Request request;
+    private String token;
+    private long validUntil;
 
-    public InRequestException(Throwable throwable, Request request)
+    public AuthToken(String token, long validUntil)
     {
-        super(throwable);
-        this.request = request;
+        this.token = token;
+        this.validUntil = validUntil;
     }
 
-    public Request getRequest()
+    public String getToken()
     {
-        return request;
+        return token;
+    }
+
+    public long getValidUntil()
+    {
+        return validUntil;
     }
 }

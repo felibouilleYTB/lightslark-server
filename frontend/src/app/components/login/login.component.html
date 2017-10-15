@@ -31,30 +31,30 @@
 </div>
 
 <div id="right-block">
-    <md-card id="login-block">
+    <mat-card id="login-block">
         <h3>Connexion</h3>
 
         <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
-            <md-input-container>
-                <input mdInput #email id="email" type="email" placeholder="E-Mail" [readOnly]="logging" formControlName="email">
-                <md-error *ngIf="loginForm.get('email').hasError('pattern')">
+            <mat-input-container>
+                <input matInput #email id="email" type="email" placeholder="E-Mail" [readOnly]="logging" formControlName="email">
+                <mat-error *ngIf="loginForm.get('email').hasError('pattern')">
                     Veuillez entrer une addresse email valide
-                </md-error>
-                <md-error *ngIf="loginForm.get('email').hasError('required')">
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('email').hasError('required')">
                     Ce champ est <strong>obligatoire</strong>
-                </md-error>
-            </md-input-container>
-            <md-input-container>
-                <input mdInput #password id="password" type="password" placeholder="Mot de passe" [readOnly]="logging" formControlName="password">
-                <md-error *ngIf="loginForm.get('password').hasError('required')">
+                </mat-error>
+            </mat-input-container>
+            <mat-input-container>
+                <input matInput #password id="password" type="password" placeholder="Mot de passe" [readOnly]="logging" formControlName="password">
+                <mat-error *ngIf="loginForm.get('password').hasError('required')">
                     Ce champ est <strong>obligatoire</strong>
-                </md-error>
-            </md-input-container>
+                </mat-error>
+            </mat-input-container>
 
-            <md-checkbox [disabled]="logging" formControlName="remember">Se souvenir de moi</md-checkbox>
+            <mat-checkbox [disabled]="logging" formControlName="remember">Se souvenir de moi</mat-checkbox>
 
-            <button type="submit" *ngIf="!logging" md-raised-button [disabled]="loginForm.invalid">Se connecter</button>
-            <md-progress-spinner id="logging" *ngIf="logging" mode="indeterminate"></md-progress-spinner>
+            <button type="submit" *ngIf="!logging" mat-raised-button [disabled]="loginForm.invalid">Se connecter</button>
+            <mat-progress-spinner id="logging" *ngIf="logging" mode="indeterminate"></mat-progress-spinner>
         </form>
-    </md-card>
+    </mat-card>
 </div>

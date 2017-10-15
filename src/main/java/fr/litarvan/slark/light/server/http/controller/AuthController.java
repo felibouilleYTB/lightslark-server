@@ -19,10 +19,10 @@
 package fr.litarvan.slark.light.server.http.controller;
 
 import com.google.gson.JsonObject;
-import fr.litarvan.slark.light.server.APIError;
+import fr.litarvan.slark.light.server.http.error.APIError;
+import fr.litarvan.slark.light.server.auth.AuthException;
 import fr.litarvan.slark.light.server.http.Controller;
 import fr.litarvan.slark.light.server.service.AuthService;
-import fr.litarvan.slark.light.server.service.AuthService.AuthException;
 import javax.inject.Inject;
 import spark.Request;
 import spark.Response;

@@ -22,16 +22,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {
-    MdButtonModule, MdCardModule, MdCheckboxModule, MdCoreModule, MdExpansionModule, MdInputModule,
-    MdProgressSpinnerModule, MdRippleModule, MdSnackBarModule, MdTableModule, MdTooltipModule
+    MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatInputModule,
+    MatProgressSpinnerModule, MatRippleModule, MatSnackBarModule, MatTableModule, MatTooltipModule
 } from '@angular/material';
-import { WhitelistComponent } from '../components/whitelist/whitelist.component';
+import { WhitelistAddDialogComponent, WhitelistComponent } from '../components/whitelist/whitelist.component';
 import { LoginComponent } from '../components/login/login.component';
 import { AuthService } from '../services/auth.service';
 import { ConfigService } from '../services/config.service';
 import { AboutComponent } from '../components/about/about.component';
 import {HttpModule, JsonpModule} from "@angular/http";
-import { CdkTableModule } from '@angular/cdk';
+import { WhitelistService } from '../services/whitelist.service';
+import { HandleService } from '../services/handle.service';
+import { CdkTableModule } from '@angular/cdk/table';
 
 const routes: Routes = [
     // Admin
@@ -57,7 +59,11 @@ const routes: Routes = [
     declarations: [
         WhitelistComponent,
         LoginComponent,
-        AboutComponent
+        AboutComponent,
+        WhitelistAddDialogComponent
+    ],
+    entryComponents: [
+        WhitelistAddDialogComponent
     ],
     imports: [
         CommonModule,
@@ -66,15 +72,16 @@ const routes: Routes = [
 
         CdkTableModule,
 
-        MdTooltipModule,
-        MdInputModule,
-        MdCheckboxModule,
-        MdButtonModule,
-        MdCardModule,
-        MdProgressSpinnerModule,
-        MdSnackBarModule,
-        MdTableModule,
-        MdRippleModule,
+        MatTooltipModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatRippleModule,
+        MatDialogModule,
 
         HttpModule,
         JsonpModule,
@@ -86,7 +93,9 @@ const routes: Routes = [
     ],
     providers: [
         AuthService,
-        ConfigService
+        ConfigService,
+        WhitelistService,
+        HandleService
     ]
 })
 export class AppRoutingModule

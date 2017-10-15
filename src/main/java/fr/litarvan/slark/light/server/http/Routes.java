@@ -20,6 +20,7 @@ package fr.litarvan.slark.light.server.http;
 
 import fr.litarvan.slark.light.server.http.controller.AuthController;
 import fr.litarvan.slark.light.server.http.controller.MainController;
+import fr.litarvan.slark.light.server.http.controller.WhitelistController;
 import javax.inject.Inject;
 
 import static spark.Spark.*;
@@ -27,20 +28,29 @@ import static spark.Spark.*;
 public final class Routes
 {
     @Inject
+    private MainController main;
+
+    @Inject
     private AuthController auth;
 
     @Inject
-    private MainController main;
+    private WhitelistController whitelist;
 
     public void load()
     {
-        get("/", main::home);
+        get("/", main::web);
+
         path("/api", () -> {
             path("/auth", () -> {
-                post("/login", auth::login);
-                post("/validate", auth::validate);
-                post("/logout", auth::logout);
+                post("/login",      auth::login);
+                post("/validate",   auth::validate);
+                post("/logout",     auth::logout);
             });
+
+            get("/whitelist",    whitelist::get);
+            put("/whitelist",    whitelist::add);
+            post("/whitelist",   whitelist::update);
+            delete("/whitelist", whitelist::delete);
         });
     }
 }

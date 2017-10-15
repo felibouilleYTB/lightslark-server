@@ -19,18 +19,67 @@
 
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { WhitelistEntry } from '../components/whitelist/whitelist.component';
 import { Observable } from 'rxjs/Observable';
+import { API_URL } from '../../environments/environment';
+import { AuthService } from './auth.service';
+import { APIError, BaseService } from './base.service';
 
 @Injectable()
-export class WhitelistService
+export class WhitelistService extends BaseService
 {
-    constructor(private http: Http)
+    constructor(private http: Http, auth: AuthService)
     {
+        super(auth);
     }
 
-    getWhitelist(): Observable<WhitelistEntry[]>
+    add(entry: string): Observable<APIError>
     {
-        return null
+        return this.handle(this.http.put(`${API_URL}/whitelist`, '', this.withToken({
+            entry: entry
+        })));
+    }
+
+    update(entry: WhitelistEntry, newEntry: string): Observable<APIError>
+    {
+        return this.handle(this.http.post(`${API_URL}/whitelist`, '', this.withToken({
+            entry: entry.name,
+            newEntry: newEntry
+        })));
+    }
+
+    remove(entry: WhitelistEntry): Observable<APIError>
+    {
+        return this.handle(this.http.delete(`${API_URL}/whitelist`, this.withToken({
+            entry: entry.name
+        })));
+    }
+
+    get(): Observable<WhitelistEntry[]>
+    {
+        return this.http.get(`${API_URL}/whitelist`, this.withToken()).map(res => {
+            const json = res.json();
+            const entries: WhitelistEntry[] = [];
+
+            json.forEach((item, index) => {
+               entries.push(createEntry(index, item))
+            });
+
+            return entries;
+        }).catch(error => Observable.throw(error));
+    }
+}
+
+export interface WhitelistEntry
+{
+    id: string;
+    name: string;
+    type: string;
+}
+
+export function createEntry(id: string, entry: string): WhitelistEntry {
+    return {
+        id: id,
+        name: entry,
+        type: entry.includes('*') ? 'glob' : (entry.endsWith('/') ? 'folder' : 'file')
     }
 }

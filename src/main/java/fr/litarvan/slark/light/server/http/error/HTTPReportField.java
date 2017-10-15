@@ -16,12 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.litarvan.slark.light.server;
+package fr.litarvan.slark.light.server.http.error;
 
 import fr.litarvan.commons.crash.ExceptionHandler;
 import fr.litarvan.commons.crash.IReportField;
-import fr.litarvan.commons.crash.ReportField;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import spark.Request;
 

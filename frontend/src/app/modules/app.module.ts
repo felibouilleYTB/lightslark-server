@@ -24,7 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from '../components/app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdRippleModule, MdTooltipModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatRippleModule, MatTooltipModule } from '@angular/material';
 import { AuthService } from '../services/auth.service';
 
 export function authServiceFactory(auth: AuthService): Function
@@ -44,8 +44,10 @@ export function authServiceFactory(auth: AuthService): Function
 
         AppRoutingModule,
 
-        MdTooltipModule,
-        MdRippleModule
+        MatTooltipModule,
+        MatRippleModule,
+        MatButtonModule,
+        MatDialogModule
     ],
     providers: [
         {

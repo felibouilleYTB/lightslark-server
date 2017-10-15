@@ -20,7 +20,9 @@ package fr.litarvan.slark.light.server.service;
 
 import com.google.common.hash.Hashing;
 import fr.litarvan.commons.config.ConfigProvider;
-import fr.litarvan.slark.light.server.AuthToken;
+import fr.litarvan.slark.light.server.auth.AuthToken;
+import fr.litarvan.slark.light.server.auth.AuthError;
+import fr.litarvan.slark.light.server.auth.AuthException;
 import java.nio.charset.Charset;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -97,29 +99,5 @@ public class AuthService
     public void logout(String hostIP)
     {
         tokens.remove(hostIP);
-    }
-
-    public static class AuthException extends Exception
-    {
-        private AuthError type;
-
-        public AuthException(AuthError type, String s)
-        {
-            super(s);
-
-            this.type = type;
-        }
-
-        public AuthError getType()
-        {
-            return type;
-        }
-    }
-
-    public enum AuthError
-    {
-        INVALID_CREDENTIALS,
-        BRUTE_FORCE_PROTECTION,
-        DOS_PROTECTION
     }
 }

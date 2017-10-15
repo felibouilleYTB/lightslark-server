@@ -28,7 +28,7 @@
                 (click)="route.logout ? logout() : ''"
 
                 class="clickable ripple" [class.right]="route.hasOwnProperty('right') && route.right"
-                md-ripple md-tooltip="{{ route.name }}" md-tooltip-position="below">
+                mat-ripple matTooltip="{{ route.name }}" mat-tooltip-position="below">
 
                 <i class="fa fa-{{ route.icon }}"></i>
             </li>

@@ -18,9 +18,45 @@
  */
 package fr.litarvan.slark.light.server.service;
 
+import fr.litarvan.commons.config.ConfigProvider;
+import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.apache.commons.lang3.ArrayUtils;
 
 @Singleton
 public class WhitelistService
 {
+    @Inject
+    private ConfigProvider config;
+
+    public void add(String entry)
+    {
+        config.get("whitelist").append("whitelist", String[].class, entry);
+    }
+
+    public void update(String entry, String newEntry)
+    {
+        String[] whitelist = get();
+
+        for (int i = 0; i < whitelist.length; i++)
+        {
+            if (whitelist[i].equals(entry))
+            {
+                whitelist[i] = newEntry;
+                break;
+            }
+        }
+
+        config.get("whitelist").set("whitelist", whitelist);
+    }
+
+    public void delete(String entry)
+    {
+        config.get("whitelist").set("whitelist", ArrayUtils.removeAllOccurences(get(), entry));
+    }
+
+    public String[] get()
+    {
+        return config.at("whitelist.whitelist", String[].class);
+    }
 }

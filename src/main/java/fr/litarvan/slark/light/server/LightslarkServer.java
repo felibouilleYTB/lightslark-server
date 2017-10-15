@@ -24,7 +24,10 @@ import fr.litarvan.commons.App;
 import fr.litarvan.commons.config.ConfigProvider;
 import fr.litarvan.commons.crash.ExceptionHandler;
 import fr.litarvan.commons.io.IOSource;
+import fr.litarvan.slark.light.server.http.error.APIError;
 import fr.litarvan.slark.light.server.http.Controller;
+import fr.litarvan.slark.light.server.http.error.HTTPReportField;
+import fr.litarvan.slark.light.server.http.error.InRequestException;
 import fr.litarvan.slark.light.server.http.Routes;
 import fr.litarvan.slark.light.server.http.controller.MainController;
 import java.io.File;
@@ -72,17 +75,21 @@ public class LightslarkServer implements App
         exceptionHandler.addField(new HTTPReportField("Route params", (request) -> request.params().toString()));
         exceptionHandler.addField(new HTTPReportField("Query params", (request) -> request.queryParams().toString()));
 
+        // Configs
         LOGGER.info("Loading configs...");
 
         configs.from("config/app.json").defaultIn(IOSource.at("assets/app.default.json"));
         configs.from("config/auth.json").defaultIn(IOSource.at("assets/auth.default.json"));
+        configs.from("config/whitelist.json").defaultIn(IOSource.at("assets/whitelist.default.json"));
 
+        // Spark
         LOGGER.info("Starting HTTP engine");
 
         Spark.staticFileLocation("/assets/web");
         Spark.port(configs.at("app.port", int.class));
-        Spark.notFound(main::home);
+        Spark.notFound(main::web);
 
+        // Disable CORS protection on debug mode
         Filter corsFilter = (request, response) ->
         {
             response.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
@@ -102,6 +109,7 @@ public class LightslarkServer implements App
             Spark.after(corsFilter);
         }
 
+        // Exception handling
         Spark.exception(Exception.class, (e, request, response) ->
         {
             response.type("application/json; charset=utf-8");
@@ -138,7 +146,10 @@ public class LightslarkServer implements App
             }
         });
 
+        // Loading routes
         routes.load();
+
+        // Waiting for spark...
         Spark.awaitInitialization();
 
         System.out.println();

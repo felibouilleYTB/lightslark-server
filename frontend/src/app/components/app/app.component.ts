@@ -20,7 +20,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'slark-app',
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit
         { name: 'Se Connecter', icon: 'sign-in', path: 'auth/login', right: true, auth: false }
     ];
 
-    constructor(public auth: AuthService, private router: Router, private snack: MdSnackBar)
+    constructor(public auth: AuthService, private router: Router, private snack: MatSnackBar)
     {
     }
 

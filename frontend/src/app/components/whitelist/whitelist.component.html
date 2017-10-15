@@ -17,41 +17,43 @@
     along with Lightslark.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<md-card>
+<mat-card>
     <h2>Whitelist</h2>
 
     <div class="whitelist-container">
         <div class="whitelist-header">
-            <md-input-container floatPlaceholder="never">
-                <input mdInput #filter placeholder="Rechercher">
-            </md-input-container>
+            <mat-input-container floatPlaceholder="never">
+                <input matInput #filter placeholder="Rechercher">
+            </mat-input-container>
         </div>
 
-        <md-table #table [dataSource]="data">
+        <mat-table #table [dataSource]="data">
             <ng-container cdkColumnDef="name">
-                <md-header-cell *cdkHeaderCellDef> Fichier </md-header-cell>
-                <md-cell *cdkCellDef="let row">
+                <mat-header-cell *cdkHeaderCellDef> Fichier </mat-header-cell>
+                <mat-cell *cdkCellDef="let row">
                     <i class="fa type-icon fa-{{ row.type == 'glob' ? 'files-o' : row.type }}"></i> <span *ngIf="editing != row.id" class="file-tag" (click)="edit(row.id)">{{ row.name }}</span>
-                    <md-input-container [class.hidden]="(editing != row.id)">
-                        <input id="edit-{{ row.id }}" mdInput [(ngModel)]="row.name" autofocus>
-                    </md-input-container>
-                </md-cell>
+                    <mat-input-container [class.hidden]="(editing != row.id)">
+                        <input id="edit-{{ row.id }}" matInput [value]="row.name" autofocus>
+                    </mat-input-container>
+                </mat-cell>
             </ng-container>
 
             <ng-container cdkColumnDef="type">
-                <md-header-cell *cdkHeaderCellDef> Type </md-header-cell>
-                <md-cell *cdkCellDef="let row"> {{ row.type == 'file' ? 'Fichier' : (row.type == 'folder' ? 'Dossier' : 'Glob') }} </md-cell>
+                <mat-header-cell *cdkHeaderCellDef> Type </mat-header-cell>
+                <mat-cell *cdkCellDef="let row"> {{ row.type == 'file' ? 'Fichier' : (row.type == 'folder' ? 'Dossier' : 'Glob') }} </mat-cell>
             </ng-container>
 
             <ng-container cdkColumnDef="action">
-                <md-header-cell *cdkHeaderCellDef> Action </md-header-cell>
-                <md-cell *cdkCellDef="let row">
-                    <button md-tooltip="Supprimer" md-tooltip-position="below" class="action-button dark-ripple" (click)="remove(row)" md-ripple><i class="fa fa-trash"></i></button>
-                </md-cell>
+                <mat-header-cell *cdkHeaderCellDef> Action </mat-header-cell>
+                <mat-cell *cdkCellDef="let row">
+                    <button mat-tooltip="Supprimer" mat-tooltip-position="below" class="action-button dark-ripple" (click)="remove(row)" mat-ripple><i class="fa fa-trash"></i></button>
+                </mat-cell>
             </ng-container>
 
-            <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
-            <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
-        </md-table>
+            <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+        <button (click)="add()" id="add" mat-fab><i class="fa fa-plus"></i></button>
     </div>
-</md-card>
+</mat-card>
