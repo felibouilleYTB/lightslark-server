@@ -71,8 +71,7 @@ public class AuthService
             throw new AuthException(AuthError.DOS_PROTECTION, "Passwords longer than " + MAX_PASSWORD_LENGTH + " are not allowed");
         }
 
-        String hash = Hashing.sha512().hashString(password, Charset.defaultCharset()).toString();
-        if (email.equalsIgnoreCase(config.at("auth.email")) && hash.equals(config.at("auth.password")))
+        if (email.equalsIgnoreCase(config.at("auth.email")) && hash(password).equals(config.at("auth.password")))
         {
             String token = RandomStringUtils.randomAlphanumeric(512);
             tokens.put(hostIP, new AuthToken(token, System.currentTimeMillis() + TimeUnit.DAYS.toMillis(remember ? 30 : 1)));
@@ -99,5 +98,10 @@ public class AuthService
     public void logout(String hostIP)
     {
         tokens.remove(hostIP);
+    }
+
+    public String hash(String toHash)
+    {
+        return Hashing.sha512().hashString(toHash, Charset.defaultCharset()).toString();
     }
 }

@@ -19,6 +19,7 @@
 package fr.litarvan.slark.light.server.http;
 
 import fr.litarvan.slark.light.server.http.controller.AuthController;
+import fr.litarvan.slark.light.server.http.controller.SetupController;
 import fr.litarvan.slark.light.server.http.controller.MainController;
 import fr.litarvan.slark.light.server.http.controller.WhitelistController;
 import javax.inject.Inject;
@@ -29,6 +30,9 @@ public final class Routes
 {
     @Inject
     private MainController main;
+
+    @Inject
+    private SetupController setup;
 
     @Inject
     private AuthController auth;
@@ -46,6 +50,9 @@ public final class Routes
                 post("/validate",   auth::validate);
                 post("/logout",     auth::logout);
             });
+
+            get("/setup", setup::setup);
+            post("/is-setup", setup::isSetup);
 
             get("/whitelist",    whitelist::get);
             put("/whitelist",    whitelist::add);
