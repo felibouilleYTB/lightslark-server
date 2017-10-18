@@ -24,6 +24,9 @@ import spark.Response;
 
 public class APIError extends Exception
 {
+    // Install
+    public static final String ALREADY_SETUP = "Already set up";
+
     // Auth
     public static final String INVALID_CREDENTIALS = "Invalid credentials";
     public static final String BRUTE_FORCE_PROTECTION = "Brute-force protection";
