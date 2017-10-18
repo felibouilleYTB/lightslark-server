@@ -30,10 +30,13 @@ import { LoginComponent } from '../components/login/login.component';
 import { AuthService } from '../services/auth.service';
 import { ConfigService } from '../services/config.service';
 import { AboutComponent } from '../components/about/about.component';
-import {HttpModule, JsonpModule} from "@angular/http";
+import { HttpModule, JsonpModule } from "@angular/http";
 import { WhitelistService } from '../services/whitelist.service';
 import { HandleService } from '../services/handle.service';
 import { CdkTableModule } from '@angular/cdk/table';
+import { InstallComponent } from '../components/install/install.component';
+import { InstallWelcomeComponent } from '../components/install/welcome/install-welcome.component';
+import { InstallAuthComponent } from '../components/install/auth/install-auth.component';
 
 const routes: Routes = [
     // Admin
@@ -52,7 +55,25 @@ const routes: Routes = [
     {
         path: 'about',
         component: AboutComponent
-    }
+    },
+
+    // Install
+    {
+        path: 'install',
+        component: InstallComponent,
+        children: [
+            {
+                path: 'welcome',
+                component: InstallWelcomeComponent,
+                outlet: 'install'
+            },
+            {
+                path: 'auth',
+                component: InstallAuthComponent,
+                outlet: 'install'
+            }
+        ]
+    },
 ];
 
 @NgModule({
@@ -60,6 +81,9 @@ const routes: Routes = [
         WhitelistComponent,
         LoginComponent,
         AboutComponent,
+        InstallComponent,
+        InstallWelcomeComponent,
+        InstallAuthComponent,
         WhitelistAddDialogComponent
     ],
     entryComponents: [

@@ -2,7 +2,7 @@
     Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
 
     This file is part of Lightslark
- *
+
     Lightslark is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -19,6 +19,11 @@
 
 <mat-card>
     <h2>Whitelist</h2>
+
+    <button mat-button
+            [routerLink]="['/install', {outlets: {'install': ['welcome']}}]">
+        Install
+    </button>
 
     <div class="whitelist-container">
         <div class="whitelist-header">

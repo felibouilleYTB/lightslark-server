@@ -37,7 +37,6 @@ public class AuthController extends Controller
         String email = require(request, "email");
         String password = require(request, "password");
         boolean remember = Boolean.parseBoolean(require(request, "remember"));
-
         try
         {
             String token = auth.authenticate(request.ip(), email, password, remember);

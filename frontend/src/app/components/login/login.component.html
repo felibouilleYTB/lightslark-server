@@ -2,7 +2,7 @@
     Copyright 2014-2017 Adrien 'Litarvan' Navratil and the Lightslark contributors
 
     This file is part of Lightslark
- *
+
     Lightslark is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -54,7 +54,7 @@
             <mat-checkbox [disabled]="logging" formControlName="remember">Se souvenir de moi</mat-checkbox>
 
             <button type="submit" *ngIf="!logging" mat-raised-button [disabled]="loginForm.invalid">Se connecter</button>
-            <mat-progress-spinner id="logging" *ngIf="logging" mode="indeterminate"></mat-progress-spinner>
+            <mat-progress-spinner id="logging" [diameter]="40" [strokeWidth]="3.5" *ngIf="logging" mode="indeterminate"></mat-progress-spinner>
         </form>
     </mat-card>
 </div>
