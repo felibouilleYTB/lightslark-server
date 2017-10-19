@@ -141,8 +141,8 @@ export class WhitelistComponent implements OnInit
     {
         this.handler.handle(this.whitelist.remove(entry), `${entry.name} supprimé`);
 
-        this.database.data.splice(this.database.data.indexOf(entry), 1)
-        this.database.update()
+        this.database.data.splice(this.database.data.indexOf(entry), 1);
+        this.database.update();
     }
 
     get editing(): string
