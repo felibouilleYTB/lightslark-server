@@ -36,7 +36,8 @@ import { HandleService } from '../services/handle.service';
 import { CdkTableModule } from '@angular/cdk/table';
 import { InstallComponent } from '../components/install/install.component';
 import { InstallWelcomeComponent } from '../components/install/welcome/install-welcome.component';
-import { InstallAuthComponent } from '../components/install/auth/install-auth.component';
+import { InstallInfosComponent } from '../components/install/auth/install-infos.component';
+import { InstallService } from '../services/install.service';
 
 const routes: Routes = [
     // Admin
@@ -68,8 +69,8 @@ const routes: Routes = [
                 outlet: 'install'
             },
             {
-                path: 'auth',
-                component: InstallAuthComponent,
+                path: 'infos',
+                component: InstallInfosComponent,
                 outlet: 'install'
             }
         ]
@@ -83,7 +84,7 @@ const routes: Routes = [
         AboutComponent,
         InstallComponent,
         InstallWelcomeComponent,
-        InstallAuthComponent,
+        InstallInfosComponent,
         WhitelistAddDialogComponent
     ],
     entryComponents: [
@@ -119,7 +120,8 @@ const routes: Routes = [
         AuthService,
         ConfigService,
         WhitelistService,
-        HandleService
+        HandleService,
+        InstallService
     ]
 })
 export class AppRoutingModule

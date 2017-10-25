@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { InstallService } from '../../services/install.service';
 
 @Component({
     selector: 'slark-install',
@@ -8,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class InstallComponent implements OnInit
 {
-    constructor(private router: Router)
+
+    constructor(private router: Router, public install: InstallService)
     {
     }
 

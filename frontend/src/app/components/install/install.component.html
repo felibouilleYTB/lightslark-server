@@ -1,3 +1,34 @@
 <mat-card id="install-content">
     <router-outlet name="install"></router-outlet>
 </mat-card>
+
+<div id="install-nav">
+    <div *ngFor="let entry of install.steps; let i = index"
+
+         (click)="install.switchStep(i, false)"
+
+         class="install-entry"
+         [class.active]="install.current == i"
+         [class.done]="install.current > i"
+         [class.last-entry]="i == install.steps.length - 1">
+        <span class="entry-number">{{ i + 1 }}</span><span class="entry-title">{{ entry.name }}</span>
+        <i class="entry-next fa fa-check"
+           [class.fa-angle-right]="install.current <= i"
+           [class.fa-check]="install.current > i"></i>
+    </div>
+    <!-- <div class="install-entry done">
+        <span class="entry-number">1</span><span class="entry-title">Bienvenue</span>
+        <i class="entry-next fa fa-check"></i>
+    </div><div class="install-entry done">
+        <span class="entry-number">2</span>
+        <span class="entry-title">Infos</span>
+        <i class="entry-next fa fa-check"></i>
+    </div><div class="install-entry active">
+        <span class="entry-number">3</span><span class="entry-title">Mise à jour</span>
+        <i class="entry-next fa fa-angle-right"></i>
+    </div><div class="install-entry" id="last-entry">
+        <span class="entry-number">4</span>
+        <span class="entry-title">Commencer</span>
+        <i class="entry-next fa fa-angle-right"></i>
+    </div> -->
+</div>

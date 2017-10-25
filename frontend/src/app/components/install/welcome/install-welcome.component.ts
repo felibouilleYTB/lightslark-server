@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InstallService } from '../../../services/install.service';
 
 @Component({
     selector: 'slark-install-welcome',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
 })
 export class InstallWelcomeComponent
 {
-
+    constructor(public install: InstallService)
+    {
+    }
 }

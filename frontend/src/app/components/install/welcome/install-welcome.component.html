@@ -1,6 +1,6 @@
-Le welcome
+<img id="logo" src="/assets/images/logo.png" />
 
-<button mat-button
-        [routerLink]="['/install', {outlets: {'install': ['auth']}}]">
-    Auth
-</button>
+<div id="title">Lightslark</div>
+<div id="subtitle">v1.0.0</div>
+
+<button mat-raised-button (click)="install.next()">Démarrer</button>
