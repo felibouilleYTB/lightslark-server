@@ -59,3 +59,15 @@ input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly
 .spinner-layer {
     border-color: #00c6e5 !important;
 }*/
+
+.router-content > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#main-content > * {
+    top: 65px;
+    height: calc(100vh - 65px);
+}

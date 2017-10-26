@@ -65,7 +65,7 @@ mat-card {
 .whitelist-container {
     display: flex;
     flex-direction: column;
-    max-height: 500px;
+    max-height: calc(100vh - 435px);
     min-width: 300px;
     font-family: "Roboto", "Arial", sans-serif;
 }

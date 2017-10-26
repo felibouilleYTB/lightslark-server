@@ -31,10 +31,6 @@ export class InstallService
 
     switchStep(id: number, acceptNext: boolean)
     {
-        console.log(this.current);
-        console.log(id);
-        console.log(acceptNext);
-
         if (this.current >= (acceptNext ? id - 1 : id)) {
             this.router.navigate(['/install', {
                 outlets: {

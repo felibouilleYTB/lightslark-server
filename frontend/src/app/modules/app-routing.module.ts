@@ -43,35 +43,41 @@ const routes: Routes = [
     // Admin
     {
         path: 'admin/whitelist',
-        component: WhitelistComponent
+        component: WhitelistComponent,
+        data: { animation: 'whitelist'}
     },
 
     // Auth
     {
         path: 'auth/login',
-        component: LoginComponent
+        component: LoginComponent,
+        data: { animation: 'login'}
     },
 
     // Misc
     {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
+        data: { animation: 'about'}
     },
 
     // Install
     {
         path: 'install',
         component: InstallComponent,
+        data: { animation: 'install'},
         children: [
             {
                 path: 'welcome',
                 component: InstallWelcomeComponent,
-                outlet: 'install'
+                outlet: 'install',
+                data: { animation: 'welcome'}
             },
             {
                 path: 'infos',
                 component: InstallInfosComponent,
-                outlet: 'install'
+                outlet: 'install',
+                data: { animation: 'infos'}
             }
         ]
     },

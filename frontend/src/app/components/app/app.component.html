@@ -36,4 +36,6 @@
     </ul>
 </nav>
 
-<router-outlet></router-outlet>
+<div id="main-content" class="router-content" [@routerAnimation]="getRouteAnimation(route)">
+    <router-outlet #route="outlet"></router-outlet>
+</div>

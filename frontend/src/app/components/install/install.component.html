@@ -1,5 +1,7 @@
 <mat-card id="install-content">
-    <router-outlet name="install"></router-outlet>
+    <div class="router-content" [@routerAnimation]="getRouteAnimation(route)">
+        <router-outlet #route="outlet" name="install"></router-outlet>
+    </div>
 </mat-card>
 
 <div id="install-nav">
